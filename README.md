@@ -1,8 +1,8 @@
-# 🎼 Auditory Trainer
+# NeuroTune Auditory Trainer 🎼
 
-## About
+## What is NeuroTune?
 
-Auditory Trainer is a specialized tool designed to fine-tune your auditory skills, inspired by approaches such as Music Therapy, The Listening Program (TLP), Auditory Integration Training(AIT) Tomatis Method, among others. With a variety of features like Dynamic Filtering, Gating Frequency adjustments, and Volume Control, the tool offers a customizable experience for users.
+NeuroTune is a free Auditory Processing Trainer! Just select your prefered audio file - we recommend calming, stimulating classical music, but it's your choice! NeuroTune trains your auditory system by dynamically modifying the audio in ways that stimulate interhemispheric communication, and 'surprise' the auditory system, since these shifts are dynamic and unpredictable. Frequencies in the human vocal range are emphasised, while 'noisy' ones are reduced, thus training the brain to focus on spoken sounds, and filter out background noise. Over time, the idea is that this trains the auditory system to tune in to what it hears, discriminating between different sounds much more easily.
 
 ### Features
 
