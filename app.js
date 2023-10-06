@@ -19,6 +19,7 @@ const dynamicGating = document.getElementById('dynamicGating');
 let sourceNode;
 let filterNode;
 let gainNode;
+let pannerNode;
 
 // Initialize Settings
 const settings = {
@@ -63,9 +64,12 @@ const initAudioNodes = () => {
     sourceNode = audioContext.createMediaElementSource(audioPlayer);
     filterNode = audioContext.createBiquadFilter();
     gainNode = audioContext.createGain();
+    pannerNode = audioContext.createStereoPanner();
 
+    // Connect the nodes
     sourceNode.connect(filterNode);
-    filterNode.connect(gainNode);
+    filterNode.connect(pannerNode);  // Connect the filter to the panner
+    pannerNode.connect(gainNode);  // Connect the panner to the gain
     gainNode.connect(audioContext.destination);
 };
 
@@ -96,6 +100,12 @@ const dynamicGatingLogic = () => {
 
 };
 
+const dynamicPanningLogic = () => {
+    const panValue = getRandomBetween(-1, 1); // -1 (full left) to 1 (full right)
+    pannerNode.pan.setValueAtTime(panValue, audioContext.currentTime);
+    setTimeout(dynamicPanningLogic, getRandomBetween(100, 3000));
+};
+
 // Main Functionality
 audioInput.addEventListener('change', event => {
     const file = event.target.files[0];
@@ -108,6 +118,7 @@ audioInput.addEventListener('change', event => {
 
     dynamicFilterLogic();
     dynamicGatingLogic();
+    dynamicPanningLogic();
 });
 
 // Event Listeners for controls
@@ -145,7 +156,7 @@ audioPlayer.addEventListener('play', () => {
 
     // Dynamic gating logic with random interval
     gatingInterval = setInterval(() => {
-        const randomDelay = getRandomBetween(500, 6000); // 500ms to 3000ms
+        const randomDelay = getRandomBetween(200, 4000); // 500ms to 3000ms
         setTimeout(dynamicGatingLogic, randomDelay);
     }, 1000);
 });
