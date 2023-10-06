@@ -14,6 +14,7 @@ const gatingFrequencyMax = document.getElementById('gatingFrequencyMax');
 const volumeControl = document.getElementById('volumeControl');
 const dynamicFilter = document.getElementById('dynamicFilter');
 const dynamicGating = document.getElementById('dynamicGating');
+const dynamicPlaybackRate = document.getElementById('dynamicPlaybackRate');
 
 // Audio Nodes
 let sourceNode;
@@ -29,7 +30,8 @@ const settings = {
     gatingMax: parseFloat(gatingFrequencyMax.value),
     volume: parseFloat(volumeControl.value),
     dynamicFilter: dynamicFilter.checked,
-    dynamicGating: dynamicGating.checked
+    dynamicGating: dynamicGating.checked,
+    dynamicPlaybackRate: dynamicPlaybackRate.checked
 };
 
 // Helper Functions
@@ -44,6 +46,8 @@ const updateSettings = () => {
     settings.volume = parseFloat(volumeControl.value);
     settings.dynamicFilter = dynamicFilter.checked;
     settings.dynamicGating = dynamicGating.checked;
+    settings.dynamicPlaybackRate = dynamicPlaybackRate.checked;
+    dynamicPlaybackLogic();
 
     // Apply immediate changes to the audio nodes
     gainNode.gain.setValueAtTime(settings.volume, audioContext.currentTime);
@@ -106,6 +110,12 @@ const dynamicPanningLogic = () => {
     setTimeout(dynamicPanningLogic, getRandomBetween(100, 3000));
 };
 
+const dynamicPlaybackLogic = () => {
+    audioPlayer.playbackRate = getRandomBetween(0.5, 1.5);
+    setTimeout(dynamicPlaybackLogic, getRandomBetween(2000, 12000))
+    if(!settings.dynamicPlaybackRate) audioPlayer.playbackRate = 1;
+}
+
 // Main Functionality
 audioInput.addEventListener('change', event => {
     const file = event.target.files[0];
@@ -119,6 +129,7 @@ audioInput.addEventListener('change', event => {
     dynamicFilterLogic();
     dynamicGatingLogic();
     dynamicPanningLogic();
+    dynamicPlaybackLogic();
 });
 
 // Event Listeners for controls
@@ -161,6 +172,12 @@ audioPlayer.addEventListener('play', () => {
     }, 1000);
 });
 
+const playbackSpeedDisplay = document.getElementById('playbackSpeedDisplay');
+
+audioPlayer.addEventListener('timeupdate', function() {
+    playbackSpeedDisplay.innerHTML = `Current Playback Speed: ${audioPlayer.playbackRate.toFixed(2)}x`;
+});
+
 
 // Event Listeners for updating settings
 filterFrequencyMin.addEventListener('input', updateSettings);
@@ -170,4 +187,5 @@ gatingFrequencyMax.addEventListener('input', updateSettings);
 volumeControl.addEventListener('input', updateSettings);
 dynamicFilter.addEventListener('change', updateSettings);
 dynamicGating.addEventListener('change', updateSettings);
+dynamicPlaybackRate.addEventListener('change', updateSettings);
 
