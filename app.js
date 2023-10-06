@@ -1,3 +1,6 @@
+let filterTimeout;
+let gatingTimeout;
+
 // JavaScript Audio Context
 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
@@ -69,24 +72,27 @@ const initAudioNodes = () => {
 // Dynamic Filter Logic
 const dynamicFilterLogic = () => {
     if (settings.dynamicFilter) {
+        clearTimeout(filterTimeout);  // Cancel previous timeouts
         const newFrequency = getRandomBetween(settings.filterMin, settings.filterMax);
         filterNode.frequency.setValueAtTime(newFrequency, audioContext.currentTime);
+
+        const newTime = getRandomBetween(500, 3000);  // For example, between 0.5 and 3 seconds
+        // Schedule the next filter logic at the end of this one
+        filterTimeout = setTimeout(dynamicFilterLogic, newTime);
     }
 };
 
 // Dynamic Gating Logic
 const dynamicGatingLogic = () => {
-    if (!settings.dynamicGating) {
-        return;  // Add this line to prevent any gating if the setting is not enabled
-    }
 
+    clearTimeout(gatingTimeout);  // Cancel previous timeouts
     const newTime = getRandomBetween(settings.gatingMin, settings.gatingMax);
+    if (settings.dynamicGating) gainNode.gain.setValueAtTime(getRandomBetween(0, settings.volume), audioContext.currentTime);
     setTimeout(() => {
-        gainNode.gain.setValueAtTime(0, audioContext.currentTime);
-        setTimeout(() => {
-            gainNode.gain.setValueAtTime(settings.volume, audioContext.currentTime);
-        }, newTime * 500);
-    }, newTime * 1000);
+        gainNode.gain.setValueAtTime(settings.volume, audioContext.currentTime);
+        // Schedule the next gating logic at the end of this one
+        gatingTimeout = setTimeout(dynamicGatingLogic, newTime * getRandomBetween(500, 7000));
+    }, newTime * 500);
 
 };
 
@@ -99,10 +105,9 @@ audioInput.addEventListener('change', event => {
     initAudioNodes();
     audioPlayer.play();
 
-    setInterval(() => {
-        dynamicFilterLogic();
-        dynamicGatingLogic();
-    }, 1000);
+
+    dynamicFilterLogic();
+    dynamicGatingLogic();
 });
 
 // Event Listeners for controls
@@ -110,7 +115,7 @@ audioInput.addEventListener('change', event => {
     const file = event.target.files[0];
     const objectURL = URL.createObjectURL(file);
     audioPlayer.src = objectURL;
-    document.getElementById('trackLabel').innerText = file.name; 
+    document.getElementById('trackLabel').innerText = file.name;
     audioPlayer.load();
 });
 
@@ -140,7 +145,7 @@ audioPlayer.addEventListener('play', () => {
 
     // Dynamic gating logic with random interval
     gatingInterval = setInterval(() => {
-        const randomDelay = getRandomBetween(3000, 22000); // 500ms to 3000ms
+        const randomDelay = getRandomBetween(500, 6000); // 500ms to 3000ms
         setTimeout(dynamicGatingLogic, randomDelay);
     }, 1000);
 });
