@@ -1,0 +1,157 @@
+// JavaScript Audio Context
+const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+// HTML Elements
+const audioInput = document.getElementById('audioInput');
+const audioPlayer = document.getElementById('audioPlayer');
+const filterFrequencyMin = document.getElementById('filterFrequencyMin');
+const filterFrequencyMax = document.getElementById('filterFrequencyMax');
+const gatingFrequencyMin = document.getElementById('gatingFrequencyMin');
+const gatingFrequencyMax = document.getElementById('gatingFrequencyMax');
+const volumeControl = document.getElementById('volumeControl');
+const dynamicFilter = document.getElementById('dynamicFilter');
+const dynamicGating = document.getElementById('dynamicGating');
+
+// Audio Nodes
+let sourceNode;
+let filterNode;
+let gainNode;
+
+// Initialize Settings
+const settings = {
+    filterMin: parseFloat(filterFrequencyMin.value),
+    filterMax: parseFloat(filterFrequencyMax.value),
+    gatingMin: parseFloat(gatingFrequencyMin.value),
+    gatingMax: parseFloat(gatingFrequencyMax.value),
+    volume: parseFloat(volumeControl.value),
+    dynamicFilter: dynamicFilter.checked,
+    dynamicGating: dynamicGating.checked
+};
+
+// Helper Functions
+const getRandomBetween = (min, max) => Math.random() * (max - min) + min;
+
+// Update Settings
+const updateSettings = () => {
+    settings.filterMin = parseFloat(filterFrequencyMin.value);
+    settings.filterMax = parseFloat(filterFrequencyMax.value);
+    settings.gatingMin = parseFloat(gatingFrequencyMin.value);
+    settings.gatingMax = parseFloat(gatingFrequencyMax.value);
+    settings.volume = parseFloat(volumeControl.value);
+    settings.dynamicFilter = dynamicFilter.checked;
+    settings.dynamicGating = dynamicGating.checked;
+
+    // Apply immediate changes to the audio nodes
+    gainNode.gain.setValueAtTime(settings.volume, audioContext.currentTime);
+
+    // If dynamic settings are not checked, apply the max value immediately
+    if (!settings.dynamicFilter) {
+        filterNode.frequency.setValueAtTime(settings.filterMax, audioContext.currentTime);
+    }
+    if (!settings.dynamicGating) {
+        // Reset to avoid sudden silence. A more complex gating logic can be applied here.
+        gainNode.gain.setValueAtTime(settings.volume, audioContext.currentTime);
+    }
+};
+
+
+// Initialize Audio Nodes and connect them
+const initAudioNodes = () => {
+    sourceNode = audioContext.createMediaElementSource(audioPlayer);
+    filterNode = audioContext.createBiquadFilter();
+    gainNode = audioContext.createGain();
+
+    sourceNode.connect(filterNode);
+    filterNode.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+};
+
+// Dynamic Filter Logic
+const dynamicFilterLogic = () => {
+    if (settings.dynamicFilter) {
+        const newFrequency = getRandomBetween(settings.filterMin, settings.filterMax);
+        filterNode.frequency.setValueAtTime(newFrequency, audioContext.currentTime);
+    }
+};
+
+// Dynamic Gating Logic
+const dynamicGatingLogic = () => {
+    if (!settings.dynamicGating) {
+        return;  // Add this line to prevent any gating if the setting is not enabled
+    }
+
+    const newTime = getRandomBetween(settings.gatingMin, settings.gatingMax);
+    setTimeout(() => {
+        gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+        setTimeout(() => {
+            gainNode.gain.setValueAtTime(settings.volume, audioContext.currentTime);
+        }, newTime * 500);
+    }, newTime * 1000);
+
+};
+
+// Main Functionality
+audioInput.addEventListener('change', event => {
+    const file = event.target.files[0];
+    const objectURL = URL.createObjectURL(file);
+    audioPlayer.src = objectURL;
+
+    initAudioNodes();
+    audioPlayer.play();
+
+    setInterval(() => {
+        dynamicFilterLogic();
+        dynamicGatingLogic();
+    }, 1000);
+});
+
+// Event Listeners for controls
+audioInput.addEventListener('change', event => {
+    const file = event.target.files[0];
+    const objectURL = URL.createObjectURL(file);
+    audioPlayer.src = objectURL;
+    document.getElementById('trackLabel').innerText = file.name; 
+    audioPlayer.load();
+});
+
+audioPlayer.addEventListener('play', () => {
+    if (!audioContext) {
+        // Initialize the Audio Context if not already initialized
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    }
+
+    if (audioContext.state === 'suspended') {
+        audioContext.resume();
+    }
+
+    if (!sourceNode) {
+        initAudioNodes();
+    }
+
+    // Cancel any existing intervals if they exist
+    clearInterval(filterInterval);
+    clearInterval(gatingInterval);
+
+    // Dynamic filter logic with random interval
+    filterInterval = setInterval(() => {
+        const randomDelay = getRandomBetween(100, 3000); // 500ms to 3000ms
+        setTimeout(dynamicFilterLogic, randomDelay);
+    }, 1000);
+
+    // Dynamic gating logic with random interval
+    gatingInterval = setInterval(() => {
+        const randomDelay = getRandomBetween(3000, 22000); // 500ms to 3000ms
+        setTimeout(dynamicGatingLogic, randomDelay);
+    }, 1000);
+});
+
+
+// Event Listeners for updating settings
+filterFrequencyMin.addEventListener('input', updateSettings);
+filterFrequencyMax.addEventListener('input', updateSettings);
+gatingFrequencyMin.addEventListener('input', updateSettings);
+gatingFrequencyMax.addEventListener('input', updateSettings);
+volumeControl.addEventListener('input', updateSettings);
+dynamicFilter.addEventListener('change', updateSettings);
+dynamicGating.addEventListener('change', updateSettings);
+
