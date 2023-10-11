@@ -20,7 +20,7 @@
                     <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="about.html">What is NeuroTune? </a>
+                    <a class="nav-link" href="#" data-toggle="modal" data-target="#infoModal">What is NeuroTune? </a>
                 </li>
             </ul>
         </div>
@@ -30,7 +30,8 @@
         <h1 class="text-center">NeuroTune<sup>tm</sup> 🎧</h1>
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <p>NeuroTune is a free Auditory Processing Trainer! Just select your prefered audio file from your own device - we recommend
+                <p>NeuroTune is a free Auditory Processing Trainer! Just select your prefered audio file from your own
+                    device - we recommend
                     calming, stimulating classical music, but it's your choice! Headphones required for optimal
                     experience. <a href="about.html">Learn more</a>.</p>
             </div>
@@ -107,7 +108,80 @@
         </div>
     </div>
 
+    <!-- Info Modal -->
+    <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="infoModalLabel">What is NeuroTune?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="overflow-y: auto;">
+                    <!-- <div class="container mt-5"> -->
+                    <h2>What is NeuroTune? </h2>
+                    <p>NeuroTune is a free Auditory Processing Trainer! Just select your prefered audio file from your
+                        own device -
+                        we recommend calming, stimulating classical music, but it's your choice! Headphones required for
+                        optimal
+                        experience.
+
+                        NeuroTune trains your auditory system by dynamically modifying the audio in ways that stimulate
+                        interhemispheric communication, and 'surprise' the auditory system, since these shifts are
+                        dynamic and
+                        unpredictable. Frequencies in the human vocal range are emphasised, while 'noisy' ones are
+                        reduced, thus
+                        training the brain to focus on spoken sounds, and filter out background noise. Over time, the
+                        idea is that
+                        this trains the auditory system to tune in to what it hears, discriminating between different
+                        sounds much
+                        more easily.</p>
+
+                    <h3>Features</h3>
+                    <ul>
+                        <li><strong>Filter Frequency Range</strong>: Allows you to set a minimum and maximum frequency
+                            in Hertz
+                            (Hz), focusing on a specific range of sound frequencies.</li>
+                        <li><strong>Gating Frequency Range</strong>: Enables you to set the minimum and maximum gating
+                            frequency in
+                            seconds, adjusting how the sound is processed over time.</li>
+                        <li><strong>Volume Control</strong>: Gives you the ability to control the volume through a
+                            slider, ensuring
+                            that the audio levels are to your liking.</li>
+                        <li><strong>Dynamic Filter, Gating & Playback Rate Switch</strong>: These options let you enable
+                            or disable
+                            dynamic filtering and gating, as well as dynamic playback speed, offering further
+                            customization to your
+                            auditory training. High-pass filtering and gating are on by default.</li>
+                    </ul>
+
+                    <h3>Usage</h3>
+                    <ol>
+                        <li>Upload an audio file to begin.</li>
+                        <li>Customize your experience using the Dynamic Settings.</li>
+                        <li>Start your auditory training by playing the audio.</li>
+                    </ol>
+
+                    <h3>Purpose and Benefit</h3>
+                    <p>Whether you're looking to improve your language comprehension skills, refine your musical ear, or
+                        undergo
+                        auditory therapy, Auditory Trainer provides a versatile and customizable environment for all
+                        your auditory
+                        training needs.</p>
+                    <!-- </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="app.js"></script>
+    <!-- Add these before closing </body> tag -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </body>
 
 </html>
