@@ -6,3 +6,44 @@
       padding-right: 15px;
     }
   }
+
+  .inline-icon {
+    height: 1.3em;  
+    width: auto;  
+    vertical-align: middle;  
+    padding-left: .5em;
+    padding-right: .5em;
+  }
+
+  .inline-icon-2 {
+    height: 2em;  
+    width: auto;  
+    vertical-align: middle;  
+    /* padding-left: 1em; */
+    padding-right: 1em;
+  }
+
+  .translucent {
+    opacity: 0.8;
+  }
+
+  body::before {
+    content: "";
+    position: fixed; /* Fixed/sticky position */
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1; 
+  
+    background-image: url('./icons/icon-512x512.png');
+    background-size:contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    opacity: 0.05; 
+    
+  
+  }
+  
+  

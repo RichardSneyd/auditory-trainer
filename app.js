@@ -1,4 +1,5 @@
-if ('serviceWorker' in navigator) {
+const pwaEnabled = false;
+if (pwaEnabled && 'serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('./service-worker.js')
             .then((registration) => {
