@@ -1,3 +1,15 @@
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./service-worker.js')
+            .then((registration) => {
+                console.log('ServiceWorker registered:', registration);
+            })
+            .catch((registrationError) => {
+                console.log('ServiceWorker registration failed:', registrationError);
+            });
+    });
+}
+
 let filterTimeout;
 let gatingTimeout;
 
@@ -113,7 +125,7 @@ const dynamicPanningLogic = () => {
 const dynamicPlaybackLogic = () => {
     audioPlayer.playbackRate = getRandomBetween(0.5, 1.5);
     setTimeout(dynamicPlaybackLogic, getRandomBetween(2000, 12000))
-    if(!settings.dynamicPlaybackRate) audioPlayer.playbackRate = 1;
+    if (!settings.dynamicPlaybackRate) audioPlayer.playbackRate = 1;
 }
 
 // Main Functionality
@@ -174,7 +186,7 @@ audioPlayer.addEventListener('play', () => {
 
 const playbackSpeedDisplay = document.getElementById('playbackSpeedDisplay');
 
-audioPlayer.addEventListener('timeupdate', function() {
+audioPlayer.addEventListener('timeupdate', function () {
     playbackSpeedDisplay.innerHTML = `Current Playback Speed: ${audioPlayer.playbackRate.toFixed(2)}x`;
 });
 
@@ -188,4 +200,6 @@ volumeControl.addEventListener('input', updateSettings);
 dynamicFilter.addEventListener('change', updateSettings);
 dynamicGating.addEventListener('change', updateSettings);
 dynamicPlaybackRate.addEventListener('change', updateSettings);
+
+
 
