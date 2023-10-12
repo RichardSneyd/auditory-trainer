@@ -27,6 +27,7 @@ let gatingInterval;
 let firstInteraction = false;
 let firstPlay = false;
 let beatsPlaying = false;
+let currentVolume;
 
 const loadDefaultAudioBlob = async () => {
     defaultAudioBlob = await fetchDefaultAudioBlob();
@@ -166,8 +167,7 @@ const startBinauralBeats = () => {
 }
 
 const setBeatGain = () => {
-    // Set gain values (1.0 is normal volume, 2.0 is twice the normal volume, etc.)
-    const gain = getRandomBetween(0.0001, 0.006) * settings.volume;
+    const gain = getRandomBetween(0.0001, 0.013) * currentVolume;
     gainNodeLeft.gain.value = gain;
     gainNodeRight.gain.value = gain;
 }
@@ -182,13 +182,13 @@ const stopBinauralBeats = () => {
 
 const setBinauralBeatFreq = (beatFrequency) => {
     if(!beatsPlaying) return;
-    const low = beatFrequency - 10;
-    const high = beatFrequency + 10;
-    const lowLeft = getRandomBetween(0, 1) > 0.5;
-    // Set base frequency of oscillator to be the same as newFrequency
-    oscillatorNodeLeft.frequency.setValueAtTime(lowLeft ? low : high, audioContext.currentTime);
+    const targetWave = getRandomBetween(0.5, 19); // delta 0.5-4, theta 4-8, alpha 8-14, beta 14-30, gamma 30-100
+    const low = beatFrequency - targetWave / 2;
 
-    // Set frequency of the right channel to be (newFrequency + beatFrequency)
+    const high = beatFrequency + targetWave / 2;
+    const lowLeft = getRandomBetween(0, 1) > 0.5;
+
+    oscillatorNodeLeft.frequency.setValueAtTime(lowLeft ? low : high, audioContext.currentTime);
     oscillatorNodeRight.frequency.setValueAtTime(lowLeft ? high : low, audioContext.currentTime + 0.01);
 }
 
@@ -213,7 +213,8 @@ const dynamicGatingLogic = () => {
 
     clearTimeout(gatingTimeout);  
     const newTime = getRandomBetween(settings.gatingMin, settings.gatingMax);
-    if (settings.dynamicGating) gainNode.gain.setValueAtTime(getRandomBetween(0, settings.volume), audioContext.currentTime);
+    currentVolume = getRandomBetween(0, settings.volume);
+    if (settings.dynamicGating) gainNode.gain.setValueAtTime(currentVolume, audioContext.currentTime);
     setTimeout(() => {
         gainNode.gain.setValueAtTime(settings.volume, audioContext.currentTime);
 
