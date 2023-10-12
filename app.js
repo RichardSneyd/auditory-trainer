@@ -149,10 +149,7 @@ const startBinauralBeats = () => {
     pannerNodeLeft.pan.value = -1; // full left
     pannerNodeRight.pan.value = 1; // full right
 
-    // Set gain values (1.0 is normal volume, 2.0 is twice the normal volume, etc.)
-    const gain = getRandomBetween(0.0001, 0.006) * settings.volume;
-    gainNodeLeft.gain.value = gain;
-    gainNodeRight.gain.value = gain;
+    setBeatGain();
 
     // Connect nodes
     oscillatorNodeLeft.connect(gainNodeLeft);
@@ -166,6 +163,13 @@ const startBinauralBeats = () => {
     // Start oscillators
     if (!audioPlayer.paused) oscillatorNodeLeft.start();
     if (!audioPlayer.paused) oscillatorNodeRight.start();
+}
+
+const setBeatGain = () => {
+    // Set gain values (1.0 is normal volume, 2.0 is twice the normal volume, etc.)
+    const gain = getRandomBetween(0.0001, 0.006) * settings.volume;
+    gainNodeLeft.gain.value = gain;
+    gainNodeRight.gain.value = gain;
 }
 
 const stopBinauralBeats = () => {
@@ -232,6 +236,7 @@ const dynamicPlaybackLogic = () => {
 }
 
 const dynamicBinauralBeatLogic = () => {
+    setBeatGain();
     if (settings.dyanmicBinauralBeat && !audioPlayer.paused) {
         startBinauralBeats();
     }
