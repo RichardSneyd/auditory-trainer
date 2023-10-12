@@ -13,6 +13,8 @@ if (pwaEnabled && 'serviceWorker' in navigator) {
 
 let filterTimeout;
 let gatingTimeout;
+let filterInterval;
+let gatingInterval;
 
 // JavaScript Audio Context
 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -28,12 +30,25 @@ const volumeControl = document.getElementById('volumeControl');
 const dynamicFilter = document.getElementById('dynamicFilter');
 const dynamicGating = document.getElementById('dynamicGating');
 const dynamicPlaybackRate = document.getElementById('dynamicPlaybackRate');
+const dyanmicBinauralBeat = document.getElementById('dynamicBinauralBeat');
 
 // Audio Nodes
 let sourceNode;
 let filterNode;
 let gainNode;
 let pannerNode;
+
+// Initialize new oscillator nodes for binaural beats
+let oscillatorNodeLeft;
+let oscillatorNodeRight;
+
+let gainNodeLeft;
+let gainNodeRight;
+
+// Initialize new panner nodes for left and right oscillators
+let pannerNodeLeft;
+let pannerNodeRight;
+
 
 // Initialize Settings
 const settings = {
@@ -44,7 +59,8 @@ const settings = {
     volume: parseFloat(volumeControl.value),
     dynamicFilter: dynamicFilter.checked,
     dynamicGating: dynamicGating.checked,
-    dynamicPlaybackRate: dynamicPlaybackRate.checked
+    dynamicPlaybackRate: dynamicPlaybackRate.checked,
+    dyanmicBinauralBeat: dyanmicBinauralBeat.checked
 };
 
 // Helper Functions
@@ -60,7 +76,9 @@ const updateSettings = () => {
     settings.dynamicFilter = dynamicFilter.checked;
     settings.dynamicGating = dynamicGating.checked;
     settings.dynamicPlaybackRate = dynamicPlaybackRate.checked;
+    settings.dyanmicBinauralBeat = dyanmicBinauralBeat.checked;
     dynamicPlaybackLogic();
+    dynamicBinauralBeatLogic();
 
     // Apply immediate changes to the audio nodes
     gainNode.gain.setValueAtTime(settings.volume, audioContext.currentTime);
@@ -76,6 +94,50 @@ const updateSettings = () => {
 };
 
 
+const startBinauralBeats = () => {
+    if (oscillatorNodeLeft) oscillatorNodeLeft.stop();
+    if (oscillatorNodeRight) oscillatorNodeRight.stop();
+
+    // Initialize new oscillator nodes for binaural beats
+    oscillatorNodeLeft = audioContext.createOscillator();
+    oscillatorNodeRight = audioContext.createOscillator();
+
+    // Initialize gain nodes
+    gainNodeLeft = audioContext.createGain();
+    gainNodeRight = audioContext.createGain();
+
+    // Initialize new panner nodes for left and right oscillators
+    pannerNodeLeft = audioContext.createStereoPanner();
+    pannerNodeRight = audioContext.createStereoPanner();
+
+    // Set pan values
+    pannerNodeLeft.pan.value = -1; // full left
+    pannerNodeRight.pan.value = 1; // full right
+
+    // Set gain values (1.0 is normal volume, 2.0 is twice the normal volume, etc.)
+    const gain = getRandomBetween(0.0001, 0.006) * settings.volume;
+    gainNodeLeft.gain.value = gain;
+    gainNodeRight.gain.value = gain;
+
+    // Connect nodes
+    oscillatorNodeLeft.connect(gainNodeLeft);
+    gainNodeLeft.connect(pannerNodeLeft);
+    pannerNodeLeft.connect(audioContext.destination);
+
+    oscillatorNodeRight.connect(gainNodeRight);
+    gainNodeRight.connect(pannerNodeRight);
+    pannerNodeRight.connect(audioContext.destination);
+
+    // Start oscillators
+    if (!audioPlayer.paused) oscillatorNodeLeft.start();
+    if (!audioPlayer.paused) oscillatorNodeRight.start();
+}
+
+const stopBinauralBeats = () => {
+    oscillatorNodeLeft.stop();
+    oscillatorNodeRight.stop();
+}
+
 // Initialize Audio Nodes and connect them
 const initAudioNodes = () => {
     sourceNode = audioContext.createMediaElementSource(audioPlayer);
@@ -88,7 +150,22 @@ const initAudioNodes = () => {
     filterNode.connect(pannerNode);  // Connect the filter to the panner
     pannerNode.connect(gainNode);  // Connect the panner to the gain
     gainNode.connect(audioContext.destination);
+
+   // startBinauralBeats();
+
 };
+
+
+const setBinauralBeatFreq = (beatFrequency) => {
+    const low = beatFrequency - 10;
+    const high = beatFrequency + 10;
+    const lowLeft = getRandomBetween(0, 1) > 0.5;
+    // Set base frequency of oscillator to be the same as newFrequency
+    oscillatorNodeLeft.frequency.setValueAtTime(lowLeft ? low : high, audioContext.currentTime);
+
+    // Set frequency of the right channel to be (newFrequency + beatFrequency)
+    oscillatorNodeRight.frequency.setValueAtTime(lowLeft ? high : low, audioContext.currentTime + 0.01);
+}
 
 // Dynamic Filter Logic
 const dynamicFilterLogic = () => {
@@ -96,6 +173,8 @@ const dynamicFilterLogic = () => {
         clearTimeout(filterTimeout);  // Cancel previous timeouts
         const newFrequency = getRandomBetween(settings.filterMin, settings.filterMax);
         filterNode.frequency.setValueAtTime(newFrequency, audioContext.currentTime);
+
+        setBinauralBeatFreq(newFrequency);
 
         const newTime = getRandomBetween(500, 3000);  // For example, between 0.5 and 3 seconds
         // Schedule the next filter logic at the end of this one
@@ -129,6 +208,15 @@ const dynamicPlaybackLogic = () => {
     if (!settings.dynamicPlaybackRate) audioPlayer.playbackRate = 1;
 }
 
+const dynamicBinauralBeatLogic = () => {
+    if (settings.dyanmicBinauralBeat && !audioPlayer.paused) {
+        startBinauralBeats();
+    }
+    else {
+        stopBinauralBeats();
+    }
+}
+
 // Main Functionality
 audioInput.addEventListener('change', event => {
     const file = event.target.files[0];
@@ -136,9 +224,8 @@ audioInput.addEventListener('change', event => {
     audioPlayer.src = objectURL;
 
     initAudioNodes();
-    audioPlayer.play();
 
-
+    //redundant...
     dynamicFilterLogic();
     dynamicGatingLogic();
     dynamicPanningLogic();
@@ -147,11 +234,13 @@ audioInput.addEventListener('change', event => {
 
 // Event Listeners for controls
 audioInput.addEventListener('change', event => {
+    stopBinauralBeats();
     const file = event.target.files[0];
     const objectURL = URL.createObjectURL(file);
     audioPlayer.src = objectURL;
     document.getElementById('trackLabel').innerText = file.name;
     audioPlayer.load();
+    
 });
 
 audioPlayer.addEventListener('play', () => {
@@ -201,6 +290,14 @@ volumeControl.addEventListener('input', updateSettings);
 dynamicFilter.addEventListener('change', updateSettings);
 dynamicGating.addEventListener('change', updateSettings);
 dynamicPlaybackRate.addEventListener('change', updateSettings);
+dyanmicBinauralBeat.addEventListener('change', updateSettings);
 
+audioPlayer.addEventListener('play', function () {
+    if(settings.dyanmicBinauralBeat) startBinauralBeats();
+});
+
+audioPlayer.addEventListener('pause', function () {
+    stopBinauralBeats();
+});
 
 
