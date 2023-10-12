@@ -254,6 +254,7 @@ audioInput.addEventListener('change', event => {
 });
 
 const changeAudio = (file) => {
+    audioPlayer.removeAttribute("disabled");
     stopBinauralBeats();
     if (!firstInteraction) firstInteractionListener();
     const objectURL = URL.createObjectURL(file);
