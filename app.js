@@ -1,4 +1,4 @@
-const pwaEnabled = true;
+const pwaEnabled = false;
 if (pwaEnabled && 'serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('./service-worker.js')
@@ -167,7 +167,7 @@ const startBinauralBeats = () => {
 }
 
 const setBeatGain = () => {
-    const gain = getRandomBetween(0.0001, 0.013) * currentVolume;
+    const gain = getRandomBetween(0, 0.012) * currentVolume;
     gainNodeLeft.gain.value = gain;
     gainNodeRight.gain.value = gain;
 }
@@ -182,10 +182,12 @@ const stopBinauralBeats = () => {
 
 const setBinauralBeatFreq = (beatFrequency) => {
     if(!beatsPlaying) return;
+   // const base = Math.max(100, beatFrequency);
+    const base = getRandomBetween(settings.filterMin, beatFrequency);
     const targetWave = getRandomBetween(0.5, 19); // delta 0.5-4, theta 4-8, alpha 8-14, beta 14-30, gamma 30-100
-    const low = beatFrequency - targetWave / 2;
+    const low = base - targetWave / 2;
 
-    const high = beatFrequency + targetWave / 2;
+    const high = base + targetWave / 2;
     const lowLeft = getRandomBetween(0, 1) > 0.5;
 
     oscillatorNodeLeft.frequency.setValueAtTime(lowLeft ? low : high, audioContext.currentTime);
