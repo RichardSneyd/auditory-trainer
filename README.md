@@ -22,5 +22,5 @@
 
 ### Purpose and Benefit
 
-Whether you're looking to improve your language comprehension skills, refine your musical ear, or undergo auditory therapy, Auditory Trainer provides a versatile and customizable environment to help you reach your goals.
+Whether you're looking to improve your language comprehension skills, refine your musical ear, or undergo auditory therapy, NeuroTune provides a versatile and customizable environment to help you reach your goals.
 
