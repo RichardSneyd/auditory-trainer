@@ -277,7 +277,7 @@ audioPlayer.addEventListener('play', () => {
 const playbackSpeedDisplay = document.getElementById('playbackSpeedDisplay');
 
 audioPlayer.addEventListener('timeupdate', function () {
-    playbackSpeedDisplay.innerHTML = `Current Playback Speed: ${audioPlayer.playbackRate.toFixed(2)}x`;
+    playbackSpeedDisplay.innerHTML = `Playback Speed: ${audioPlayer.playbackRate.toFixed(2)}x`;
 });
 
 
