@@ -40,6 +40,7 @@ let audioContext;
 // HTML Elements
 const audioInput = document.getElementById('audioInput');
 const audioPlayer = document.getElementById('audioPlayer');
+audioPlayer.disabled = true;
 const filterFrequencyMin = document.getElementById('filterFrequencyMin');
 const filterFrequencyMax = document.getElementById('filterFrequencyMax');
 const gatingFrequencyMin = document.getElementById('gatingFrequencyMin');
@@ -254,9 +255,12 @@ audioInput.addEventListener('change', event => {
 });
 
 const changeAudio = (file) => {
-    audioPlayer.removeAttribute("disabled");
+    if (!firstInteraction) {
+        firstInteractionListener();
+        return;
+    }
+    audioPlayer.disabled = false;
     stopBinauralBeats();
-    if (!firstInteraction) firstInteractionListener();
     const objectURL = URL.createObjectURL(file);
     audioPlayer.src = objectURL;
     document.getElementById('trackLabel').innerText = file === defaultAudioBlob ? defaultMusicFileName : file.name;
@@ -327,12 +331,14 @@ dynamicPlaybackRate.addEventListener('change', updateSettings);
 dyanmicBinauralBeat.addEventListener('change', updateSettings);
 
 audioPlayer.addEventListener('play', function () {
+    if(audioPlayer.disabled) return;
     firstPlay = true;
     if (settings.dyanmicBinauralBeat) startBinauralBeats();
     playAudio();
 });
 
 audioPlayer.addEventListener('pause', function () {
+    if(audioPlayer.disabled) return;
     stopBinauralBeats();
 });
 
