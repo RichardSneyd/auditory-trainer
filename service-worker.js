@@ -7,7 +7,9 @@ self.addEventListener('install', (event) => {
           './main.css',
           './app.js',
           './icons/icon-192x192.png',
-          './icons/icon-512x512.png'
+          './icons/icon-512x512.png',
+          './music/mozart-overture-to-the-marriage-of-figaro-k.mp3',
+
         ]);
       })
     );
