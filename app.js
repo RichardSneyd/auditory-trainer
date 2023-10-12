@@ -335,7 +335,7 @@ audioPlayer.addEventListener('pause', function () {
 
 window.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
-        const link = document.getElementById("whatIsNeuroTune");
+        const link = document.getElementById("welcomeToNeuroTune");
         link.click();
         window.addEventListener('click', firstInteractionListener);
     }, 200);
