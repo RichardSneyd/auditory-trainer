@@ -1,4 +1,4 @@
-const pwaEnabled = true;
+const pwaEnabled = false;
 if (pwaEnabled && 'serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('./service-worker.js')
@@ -11,13 +11,30 @@ if (pwaEnabled && 'serviceWorker' in navigator) {
     });
 }
 
+async function fetchDefaultAudioBlob() {
+    const response = await fetch('./music/mozart-overture-to-the-marriage-of-figaro-k.mp3');
+    const blob = await response.blob();
+    return blob;
+}
+
+const defaultMusicFilePath = './music/mozart-overture-to-the-marriage-of-figaro-k.mp3';
+const defaultMusicFileName = 'Overture to the Marriage of Figaro - Mozart';
+let defaultAudioBlob;
 let filterTimeout;
 let gatingTimeout;
 let filterInterval;
 let gatingInterval;
+let firstInteraction = false;
+let firstPlay = false;
+let beatsPlaying = false;
+
+const loadDefaultAudioBlob = async () => {
+    defaultAudioBlob = await fetchDefaultAudioBlob();
+    // changeAudio(defaultAudioBlob);
+}
 
 // JavaScript Audio Context
-const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+let audioContext;
 
 // HTML Elements
 const audioInput = document.getElementById('audioInput');
@@ -63,6 +80,22 @@ const settings = {
     dyanmicBinauralBeat: dyanmicBinauralBeat.checked
 };
 
+// Initialize Audio Nodes and connect them
+const initAudioNodes = () => {
+    sourceNode = audioContext.createMediaElementSource(audioPlayer);
+    filterNode = audioContext.createBiquadFilter();
+    gainNode = audioContext.createGain();
+    pannerNode = audioContext.createStereoPanner();
+
+    // Connect the nodes
+    sourceNode.connect(filterNode);
+    filterNode.connect(pannerNode);  // Connect the filter to the panner
+    pannerNode.connect(gainNode);  // Connect the panner to the gain
+    gainNode.connect(audioContext.destination);
+
+    changeAudio(defaultAudioBlob);
+};
+
 // Helper Functions
 const getRandomBetween = (min, max) => Math.random() * (max - min) + min;
 
@@ -95,6 +128,8 @@ const updateSettings = () => {
 
 
 const startBinauralBeats = () => {
+    if (beatsPlaying) return;
+    beatsPlaying = true;
     if (oscillatorNodeLeft) oscillatorNodeLeft.stop();
     if (oscillatorNodeRight) oscillatorNodeRight.stop();
 
@@ -134,29 +169,15 @@ const startBinauralBeats = () => {
 }
 
 const stopBinauralBeats = () => {
-    oscillatorNodeLeft.stop();
-    oscillatorNodeRight.stop();
+    if (!beatsPlaying) return;
+    beatsPlaying = false;
+    if (oscillatorNodeLeft) oscillatorNodeLeft.stop();
+    if (oscillatorNodeRight) oscillatorNodeRight.stop();
+
 }
 
-// Initialize Audio Nodes and connect them
-const initAudioNodes = () => {
-    sourceNode = audioContext.createMediaElementSource(audioPlayer);
-    filterNode = audioContext.createBiquadFilter();
-    gainNode = audioContext.createGain();
-    pannerNode = audioContext.createStereoPanner();
-
-    // Connect the nodes
-    sourceNode.connect(filterNode);
-    filterNode.connect(pannerNode);  // Connect the filter to the panner
-    pannerNode.connect(gainNode);  // Connect the panner to the gain
-    gainNode.connect(audioContext.destination);
-
-   // startBinauralBeats();
-
-};
-
-
 const setBinauralBeatFreq = (beatFrequency) => {
+    if(!beatsPlaying) return;
     const low = beatFrequency - 10;
     const high = beatFrequency + 10;
     const lowLeft = getRandomBetween(0, 1) > 0.5;
@@ -170,13 +191,14 @@ const setBinauralBeatFreq = (beatFrequency) => {
 // Dynamic Filter Logic
 const dynamicFilterLogic = () => {
     if (settings.dynamicFilter) {
-        clearTimeout(filterTimeout);  // Cancel previous timeouts
+        clearTimeout(filterTimeout);
         const newFrequency = getRandomBetween(settings.filterMin, settings.filterMax);
         filterNode.frequency.setValueAtTime(newFrequency, audioContext.currentTime);
 
         setBinauralBeatFreq(newFrequency);
 
-        const newTime = getRandomBetween(500, 3000);  // For example, between 0.5 and 3 seconds
+        const newTime = getRandomBetween(500, 3000);  
+
         // Schedule the next filter logic at the end of this one
         filterTimeout = setTimeout(dynamicFilterLogic, newTime);
     }
@@ -185,11 +207,12 @@ const dynamicFilterLogic = () => {
 // Dynamic Gating Logic
 const dynamicGatingLogic = () => {
 
-    clearTimeout(gatingTimeout);  // Cancel previous timeouts
+    clearTimeout(gatingTimeout);  
     const newTime = getRandomBetween(settings.gatingMin, settings.gatingMax);
     if (settings.dynamicGating) gainNode.gain.setValueAtTime(getRandomBetween(0, settings.volume), audioContext.currentTime);
     setTimeout(() => {
         gainNode.gain.setValueAtTime(settings.volume, audioContext.currentTime);
+
         // Schedule the next gating logic at the end of this one
         gatingTimeout = setTimeout(dynamicGatingLogic, newTime * getRandomBetween(500, 7000));
     }, newTime * 500);
@@ -217,35 +240,27 @@ const dynamicBinauralBeatLogic = () => {
     }
 }
 
-// Main Functionality
 audioInput.addEventListener('change', event => {
-    const file = event.target.files[0];
+
+    changeAudio(event.target.files[0]);
+});
+
+const changeAudio = (file) => {
+    stopBinauralBeats();
+    if (!firstInteraction) firstInteractionListener();
     const objectURL = URL.createObjectURL(file);
     audioPlayer.src = objectURL;
+    document.getElementById('trackLabel').innerText = file === defaultAudioBlob ? defaultMusicFileName : file.name;
+    audioPlayer.load();
 
-    initAudioNodes();
-
-    //redundant...
     dynamicFilterLogic();
     dynamicGatingLogic();
     dynamicPanningLogic();
     dynamicPlaybackLogic();
-});
+}
 
-// Event Listeners for controls
-audioInput.addEventListener('change', event => {
-    stopBinauralBeats();
-    const file = event.target.files[0];
-    const objectURL = URL.createObjectURL(file);
-    audioPlayer.src = objectURL;
-    document.getElementById('trackLabel').innerText = file.name;
-    audioPlayer.load();
-    
-});
-
-audioPlayer.addEventListener('play', () => {
+const playAudio = () => {
     if (!audioContext) {
-        // Initialize the Audio Context if not already initialized
         audioContext = new (window.AudioContext || window.webkitAudioContext)();
     }
 
@@ -272,13 +287,23 @@ audioPlayer.addEventListener('play', () => {
         const randomDelay = getRandomBetween(200, 4000); // 500ms to 3000ms
         setTimeout(dynamicGatingLogic, randomDelay);
     }, 1000);
-});
+}
 
 const playbackSpeedDisplay = document.getElementById('playbackSpeedDisplay');
 
 audioPlayer.addEventListener('timeupdate', function () {
-    playbackSpeedDisplay.innerHTML = `Playback Speed: ${audioPlayer.playbackRate.toFixed(2)}x`;
+    playbackSpeedDisplay.innerHTML = `Playback Rate: ${audioPlayer.playbackRate.toFixed(2)}x`;
 });
+
+const firstInteractionListener = async () => {
+    if (firstInteraction) return;
+    firstInteraction = true;
+    window.removeEventListener('click', firstInteractionListener);
+
+    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    await loadDefaultAudioBlob();
+    initAudioNodes();
+}
 
 
 // Event Listeners for updating settings
@@ -293,11 +318,19 @@ dynamicPlaybackRate.addEventListener('change', updateSettings);
 dyanmicBinauralBeat.addEventListener('change', updateSettings);
 
 audioPlayer.addEventListener('play', function () {
-    if(settings.dyanmicBinauralBeat) startBinauralBeats();
+    firstPlay = true;
+    if (settings.dyanmicBinauralBeat) startBinauralBeats();
+    playAudio();
 });
 
 audioPlayer.addEventListener('pause', function () {
     stopBinauralBeats();
 });
 
-
+window.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+        const link = document.getElementById("whatIsNeuroTune");
+        link.click();
+        window.addEventListener('click', firstInteractionListener);
+    }, 200);
+})

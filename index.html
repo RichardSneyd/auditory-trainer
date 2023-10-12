@@ -27,7 +27,7 @@
                     <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#" data-toggle="modal" data-target="#infoModal">What is
+                    <a class="nav-link" id="whatIsNeuroTune" href="#" data-toggle="modal" data-target="#infoModal">What is
                         NeuroTune<sup>tm</sup>? </a>
                 </li>
                 <li class="nav-item">
@@ -60,13 +60,15 @@
                 <div id="trackLabel">No track loaded</div>
                 <div class="alert alert-info mb-0 py-1 px-2" role="alert" id="playbackSpeedDisplay"
                     style="font-size: 0.8rem;">
-                    Playback Speed: 1x
+                    Playback Rate: 1x
                 </div>
             </div>
         </div>
         <div class="row justify-content-center mt-4">
             <div class="col-12 col-md-6">
-                <audio id="audioPlayer" controls class="w-100"></audio>
+                <audio id="audioPlayer" controls class="w-100">
+                    <source src="./music/mozart-overture-to-the-marriage-of-figaro-k.mp3" type="audio/mp3">
+                </audio>
             </div>
         </div>
 
@@ -129,7 +131,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2 class="modal-title" id="infoModalLabel">What is NeuroTune<sup>tm</sup>?</h2>
+                    <h2 class="modal-title" id="infoModalLabel">Welcome to NeuroTune<sup>tm</sup></h2>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
