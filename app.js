@@ -14,15 +14,15 @@ const registerServiceWorker = () => {
 
 // registerServiceWorker();
 
-async function fetchDefaultAudioBlob() {
-    const response = await fetch('./music/mozart-overture-to-the-marriage-of-figaro-k.mp3');
-    const blob = await response.blob();
-    return blob;
-}
+// async function fetchDefaultAudioBlob() {
+//     const response = await fetch('./music/mozart-overture-to-the-marriage-of-figaro-k.mp3');
+//     const blob = await response.blob();
+//     return blob;
+// }
 
-const defaultMusicFilePath = './music/mozart-overture-to-the-marriage-of-figaro-k.mp3';
-const defaultMusicFileName = 'Overture to the Marriage of Figaro - Mozart';
-let defaultAudioBlob;
+//const defaultMusicFilePath = './music/mozart-overture-to-the-marriage-of-figaro-k.mp3';
+//const defaultMusicFileName = 'Overture to the Marriage of Figaro - Mozart';
+//let defaultAudioBlob;
 let filterTimeout;
 let gatingTimeout;
 let filterInterval;
@@ -30,12 +30,12 @@ let gatingInterval;
 let firstInteraction = false;
 let firstPlay = false;
 let beatsPlaying = false;
-let currentVolume;
+let currentVolume = 1;
 
-const loadDefaultAudioBlob = async () => {
-    defaultAudioBlob = await fetchDefaultAudioBlob();
-    // changeAudio(defaultAudioBlob);
-}
+// const loadDefaultAudioBlob = async () => {
+//     defaultAudioBlob = await fetchDefaultAudioBlob();
+//     // changeAudio(defaultAudioBlob);
+// }
 
 // JavaScript Audio Context
 let audioContext;
@@ -82,7 +82,7 @@ const settings = {
     dynamicFilter: dynamicFilter.checked,
     dynamicGating: dynamicGating.checked,
     dynamicPlaybackRate: dynamicPlaybackRate.checked,
-    dyanmicBinauralBeat: dyanmicBinauralBeat.checked
+    dynamicBinauralBeat: dyanmicBinauralBeat.checked
 };
 
 // Initialize Audio Nodes and connect them
@@ -98,7 +98,7 @@ const initAudioNodes = () => {
     pannerNode.connect(gainNode);  // Connect the panner to the gain
     gainNode.connect(audioContext.destination);
 
-    changeAudio(defaultAudioBlob);
+    //  changeAudio(defaultAudioBlob);
 };
 
 // Helper Functions
@@ -114,7 +114,7 @@ const updateSettings = () => {
     settings.dynamicFilter = dynamicFilter.checked;
     settings.dynamicGating = dynamicGating.checked;
     settings.dynamicPlaybackRate = dynamicPlaybackRate.checked;
-    settings.dyanmicBinauralBeat = dyanmicBinauralBeat.checked;
+    settings.dynamicBinauralBeat = dyanmicBinauralBeat.checked;
     dynamicPlaybackLogic();
     dynamicBinauralBeatLogic();
 
@@ -131,12 +131,18 @@ const updateSettings = () => {
     }
 };
 
-
-const startBinauralBeats = () => {
-    if (beatsPlaying) return;
-    beatsPlaying = true;
+const stopBinauralBeats = () => {
+    console.log('called stop');
+    if (!beatsPlaying) return;
+    beatsPlaying = false;
+    console.log('stopping');
     if (oscillatorNodeLeft) oscillatorNodeLeft.stop();
     if (oscillatorNodeRight) oscillatorNodeRight.stop();
+}
+
+const startBinauralBeats = () => {
+     if (beatsPlaying || !settings.dynamicBinauralBeat) return;
+    beatsPlaying = true;
 
     // Initialize new oscillator nodes for binaural beats
     oscillatorNodeLeft = audioContext.createOscillator();
@@ -171,23 +177,16 @@ const startBinauralBeats = () => {
 }
 
 const setBeatGain = () => {
-    const gain = getRandomBetween(0, 0.012) * currentVolume;
+    const gain = getRandomBetween(0, 0.09) * currentVolume;
     gainNodeLeft.gain.value = gain;
     gainNodeRight.gain.value = gain;
 }
 
-const stopBinauralBeats = () => {
-    if (!beatsPlaying) return;
-    beatsPlaying = false;
-    if (oscillatorNodeLeft) oscillatorNodeLeft.stop();
-    if (oscillatorNodeRight) oscillatorNodeRight.stop();
-
-}
 
 const setBinauralBeatFreq = (beatFrequency) => {
-    if(!beatsPlaying) return;
-   // const base = Math.max(100, beatFrequency);
-    const base = getRandomBetween(settings.filterMin, beatFrequency) / 1.1;
+    if (!beatsPlaying) return;
+    // const base = Math.max(100, beatFrequency);
+    const base = getRandomBetween(settings.filterMin, beatFrequency) / 1.8;
     const targetWave = getRandomBetween(0.5, 19); // delta 0.5-4, theta 4-8, alpha 8-14, beta 14-30, gamma 30-100
     const low = base - targetWave / 2;
 
@@ -207,7 +206,7 @@ const dynamicFilterLogic = () => {
 
         setBinauralBeatFreq(newFrequency);
 
-        const newTime = getRandomBetween(500, 6000);  
+        const newTime = getRandomBetween(500, 6000);
 
         // Schedule the next filter logic at the end of this one
         filterTimeout = setTimeout(dynamicFilterLogic, newTime);
@@ -217,7 +216,7 @@ const dynamicFilterLogic = () => {
 // Dynamic Gating Logic
 const dynamicGatingLogic = () => {
 
-    clearTimeout(gatingTimeout);  
+    clearTimeout(gatingTimeout);
     const newTime = getRandomBetween(settings.gatingMin, settings.gatingMax);
     currentVolume = getRandomBetween(0, settings.volume);
     if (settings.dynamicGating) gainNode.gain.setValueAtTime(currentVolume, audioContext.currentTime);
@@ -244,7 +243,7 @@ const dynamicPlaybackLogic = () => {
 
 const dynamicBinauralBeatLogic = () => {
     setBeatGain();
-    if (settings.dyanmicBinauralBeat && !audioPlayer.paused) {
+    if (settings.dynamicBinauralBeat && !audioPlayer.paused) {
         startBinauralBeats();
     }
     else {
@@ -252,23 +251,25 @@ const dynamicBinauralBeatLogic = () => {
     }
 }
 
-audioInput.addEventListener('change', event => {
 
-    changeAudio(event.target.files[0]);
-});
 
 const changeAudio = (file) => {
+    const objectURL = URL.createObjectURL(file);
+    audioPlayer.src = objectURL;
+    document.getElementById('trackLabel').innerText = file.name;
+    audioPlayer.load();
+
     if (!firstInteraction) {
         firstInteractionListener();
         return;
     }
     audioPlayer.disabled = false;
     stopBinauralBeats();
-    const objectURL = URL.createObjectURL(file);
-    audioPlayer.src = objectURL;
-    document.getElementById('trackLabel').innerText = file === defaultAudioBlob ? defaultMusicFileName : file.name;
-    audioPlayer.load();
 
+    configureAudio();
+}
+
+const configureAudio = () => {
     dynamicFilterLogic();
     dynamicGatingLogic();
     dynamicPanningLogic();
@@ -276,6 +277,8 @@ const changeAudio = (file) => {
 }
 
 const playAudio = () => {
+    configureAudio();
+    if (settings.dynamicBinauralBeat && !audioPlayer.paused) startBinauralBeats();
     if (!audioContext) {
         audioContext = new (window.AudioContext || window.webkitAudioContext)();
     }
@@ -311,14 +314,20 @@ audioPlayer.addEventListener('timeupdate', function () {
     playbackSpeedDisplay.innerHTML = `Playback Rate: ${audioPlayer.playbackRate.toFixed(2)}x`;
 });
 
+audioInput.addEventListener('change', event => {
+    changeAudio(event.target.files[0]);
+});
+
 const firstInteractionListener = async () => {
     if (firstInteraction) return;
     firstInteraction = true;
     window.removeEventListener('click', firstInteractionListener);
 
     audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    await loadDefaultAudioBlob();
+    // await loadDefaultAudioBlob();
     initAudioNodes();
+    playAudio();
+    if (settings.dynamicBinauralBeat && !audioPlayer.paused) startBinauralBeats();
 }
 
 
@@ -334,16 +343,17 @@ dynamicPlaybackRate.addEventListener('change', updateSettings);
 dyanmicBinauralBeat.addEventListener('change', updateSettings);
 
 audioPlayer.addEventListener('play', function () {
-    if(audioPlayer.disabled) return;
+   // if (audioPlayer.disabled) return;
     firstPlay = true;
-    if (settings.dyanmicBinauralBeat) startBinauralBeats();
+    if (settings.dynamicBinauralBeat && !audioPlayer.paused)  startBinauralBeats();
     playAudio();
 });
 
 audioPlayer.addEventListener('pause', function () {
-    if(audioPlayer.disabled) return;
+   // if (audioPlayer.disabled) return;
     stopBinauralBeats();
 });
+
 
 window.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
