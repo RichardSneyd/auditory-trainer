@@ -187,7 +187,7 @@ const stopBinauralBeats = () => {
 const setBinauralBeatFreq = (beatFrequency) => {
     if(!beatsPlaying) return;
    // const base = Math.max(100, beatFrequency);
-    const base = getRandomBetween(settings.filterMin, beatFrequency) / 2;
+    const base = getRandomBetween(settings.filterMin, beatFrequency) / 1.1;
     const targetWave = getRandomBetween(0.5, 19); // delta 0.5-4, theta 4-8, alpha 8-14, beta 14-30, gamma 30-100
     const low = base - targetWave / 2;
 

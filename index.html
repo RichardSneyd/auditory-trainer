@@ -334,16 +334,59 @@
         </div>
     </div>
 
+    <!-- Feedback Modal -->
+    <div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="feedbackModalLabel">Feedback Form</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="mailto:richardsneyd@hotmail.com" method="post" enctype="text/plain">
+                        <div class="form-group">
+                            <label for="sender" class="col-form-label">Your Email:</label>
+                            <input type="email" class="form-control" id="sender" name="sender">
+                        </div>
+                        <div class="form-group">
+                            <label for="subject" class="col-form-label">Subject:</label>
+                            <input type="text" class="form-control" id="subject" name="subject">
+                        </div>
+                        <div class="form-group">
+                            <label for="body" class="col-form-label">Your Feedback:</label>
+                            <textarea class="form-control" id="body" name="body"></textarea>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="feedback-close">Close</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
     <!-- Footer -->
     <footer class="bg-dark text-center text-white">
         <!-- Container -->
         <div class="container p-4">
             <div class="row">
+                <!-- Feedback Button -->
+                <div class="col-md-2 mt-2">
+                    <button type="button" class="btn btn-outline-light" data-toggle="modal"
+                        data-target="#feedbackModal">
+                        Have Feedback?
+                    </button>
+                </div>
                 <!-- Call to Action -->
                 <div class="col-md-6 mt-2">
                     <h5>Enjoying NeuroTune<sup>tm</sup>?</h5>
-                    <p>Please take a moment to share</p>
+                    <p>Please take a moment to share with your network:</p>
                 </div>
+
                 <!-- Social Media Icons -->
                 <div class="col-md-4 mt-2">
                     <!-- Facebook -->
@@ -383,6 +426,19 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.querySelector('.btn-primary').addEventListener('click', function () {
+            var closeButton = document.getElementById('feedback-close').click();
+            var email = document.getElementById('sender').value;
+            var subject = document.getElementById('subject').value;
+            var feedback = document.getElementById('body').value;
+
+            var mailtoLink = "mailto:richardsneyd@hotmail.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(feedback + "\n\n- Sent from: " + email);
+
+            window.location.href = mailtoLink;
+        });
+    </script>
+
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-YE05E5MW7Y"></script>
