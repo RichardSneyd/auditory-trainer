@@ -45,5 +45,31 @@
     
   
   }
+
+  /* Increase the size of the buttons */
+.modal-button {
+  font-size: 20px;      
+  padding: 15px 30px;   
+  margin: 10px;  
+  border: 3px solid black;       
+}
+
+.modal-button:hover {
+  background-color: #000; /* This changes the button's background color to black on hover. */
+  color: white; 
+}
+/* Center the buttons within the modal */
+.modal-button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row; 
+}
+
+.centered {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
   
   
