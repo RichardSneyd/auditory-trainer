@@ -1,15 +1,18 @@
-const pwaEnabled = true;
-if (pwaEnabled && 'serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./service-worker.js')
-            .then((registration) => {
-                console.log('ServiceWorker registered:', registration);
-            })
-            .catch((registrationError) => {
-                console.log('ServiceWorker registration failed:', registrationError);
-            });
-    });
+const registerServiceWorker = () => {
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('./service-worker.js')
+                .then((registration) => {
+                    console.log('ServiceWorker registered:', registration);
+                })
+                .catch((registrationError) => {
+                    console.log('ServiceWorker registration failed:', registrationError);
+                });
+        });
+    }
 }
+
+// registerServiceWorker();
 
 async function fetchDefaultAudioBlob() {
     const response = await fetch('./music/mozart-overture-to-the-marriage-of-figaro-k.mp3');
@@ -223,7 +226,7 @@ const dynamicGatingLogic = () => {
 
         // Schedule the next gating logic at the end of this one
         gatingTimeout = setTimeout(dynamicGatingLogic, newTime * getRandomBetween(500, 7000));
-    }, newTime * 500);
+    }, newTime * 1000);
 
 };
 
