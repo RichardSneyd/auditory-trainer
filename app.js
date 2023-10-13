@@ -207,7 +207,7 @@ const dynamicFilterLogic = () => {
 
         setBinauralBeatFreq(newFrequency);
 
-        const newTime = getRandomBetween(500, 3000);  
+        const newTime = getRandomBetween(500, 6000);  
 
         // Schedule the next filter logic at the end of this one
         filterTimeout = setTimeout(dynamicFilterLogic, newTime);
