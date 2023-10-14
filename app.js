@@ -177,7 +177,7 @@ const startBinauralBeats = () => {
 }
 
 const setBeatGain = () => {
-    const gain = getRandomBetween(0, 0.09) * currentVolume;
+    const gain = getRandomBetween(0, 0.012) * currentVolume;
     gainNodeLeft.gain.value = gain;
     gainNodeRight.gain.value = gain;
 }
