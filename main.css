@@ -5,6 +5,9 @@
       padding-left: 15px;
       padding-right: 15px;
     }
+    .inline-mobile {
+      display: inline-block;
+    }
   }
 
   .inline-icon {
