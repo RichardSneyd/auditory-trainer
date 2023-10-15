@@ -224,7 +224,7 @@ const dynamicGatingLogic = () => {
         gainNode.gain.setValueAtTime(settings.volume, audioContext.currentTime);
 
         // Schedule the next gating logic at the end of this one
-        gatingTimeout = setTimeout(dynamicGatingLogic, newTime * getRandomBetween(500, 7000));
+        gatingTimeout = setTimeout(dynamicGatingLogic, newTime * getRandomBetween(700, 11000));
     }, newTime * 1000);
 
 };
@@ -232,7 +232,7 @@ const dynamicGatingLogic = () => {
 const dynamicPanningLogic = () => {
     const panValue = getRandomBetween(-1, 1); // -1 (full left) to 1 (full right)
     pannerNode.pan.setValueAtTime(panValue, audioContext.currentTime);
-    setTimeout(dynamicPanningLogic, getRandomBetween(100, 3000));
+    setTimeout(dynamicPanningLogic, getRandomBetween(600, 11000));
 };
 
 const dynamicPlaybackLogic = () => {
