@@ -19,11 +19,14 @@
   }
 
   .inline-icon-2 {
-    height: 2em;  
+    height: 3em;  
     width: auto;  
     vertical-align: middle;  
     /* padding-left: 1em; */
-    padding-right: 1em;
+    /* padding-right: 1em; */
+    margin-right: 0.5em;
+    /* border-radius: 0.6em !important;  */
+    /* opacity: .8; */
   }
 
   .translucent {

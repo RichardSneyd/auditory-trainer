@@ -1,0 +1,18 @@
+{
+    "short_name": "NeuroTune",
+    "name": "NeuroTune Auditory Processing Trainer",
+    "description": "A free Auditory Processing Trainer!",
+    "icons": [
+      {
+        "src": "/icons/icon-512x512.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ],
+    "start_url": "./index.html",
+    "background_color": "#FFFFFF",
+    "display": "standalone",
+    "scope": "/",
+    "theme_color": "#000000"
+  }
+  
