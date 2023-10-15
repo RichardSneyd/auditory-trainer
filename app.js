@@ -132,10 +132,8 @@ const updateSettings = () => {
 };
 
 const stopBinauralBeats = () => {
-    console.log('called stop');
     if (!beatsPlaying) return;
     beatsPlaying = false;
-    console.log('stopping');
     if (oscillatorNodeLeft) oscillatorNodeLeft.stop();
     if (oscillatorNodeRight) oscillatorNodeRight.stop();
 }
