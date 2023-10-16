@@ -31,6 +31,8 @@ let firstInteraction = false;
 let firstPlay = false;
 let beatsPlaying = false;
 let currentVolume = 1;
+let ramp = .15;
+let panningRamp = .55;
 
 // const loadDefaultAudioBlob = async () => {
 //     defaultAudioBlob = await fetchDefaultAudioBlob();
@@ -118,15 +120,15 @@ const updateSettings = () => {
   //  dynamicBinauralBeatLogic();
 
     // Apply immediate changes to the audio nodes
-    gainNode.gain.setValueAtTime(settings.volume, audioContext.currentTime);
+    gainNode.gain.linearRampToValueAtTime(settings.volume, audioContext.currentTime + ramp);
 
     // If dynamic settings are not checked, apply the max value immediately
     if (!settings.dynamicFilter) {
-        filterNode.frequency.setValueAtTime(settings.filterMax, audioContext.currentTime);
+        filterNode.frequency.linearRampToValueAtTime(settings.filterMax, audioContext.currentTime + ramp);
     }
     if (!settings.dynamicGating) {
         // Reset to avoid sudden silence. A more complex gating logic can be applied here.
-        gainNode.gain.setValueAtTime(settings.volume, audioContext.currentTime);
+        gainNode.gain.linearRampToValueAtTime(settings.volume, audioContext.currentTime + ramp);
     }
 };
 
@@ -190,8 +192,8 @@ const setBinauralBeatFreq = (beatFrequency) => {
     const high = base + targetWave / 2;
     const lowLeft = getRandomBetween(0, 1) > 0.5;
 
-    oscillatorNodeLeft.frequency.setValueAtTime(lowLeft ? low : high, audioContext.currentTime);
-    oscillatorNodeRight.frequency.setValueAtTime(lowLeft ? high : low, audioContext.currentTime + 0.01);
+    oscillatorNodeLeft.frequency.linearRampToValueAtTime(lowLeft ? low : high, audioContext.currentTime + ramp);
+    oscillatorNodeRight.frequency.linearRampToValueAtTime(lowLeft ? high : low, audioContext.currentTime + ramp);
 }
 
 // Dynamic Filter Logic
@@ -199,7 +201,7 @@ const dynamicFilterLogic = () => {
     if (settings.dynamicFilter) {
         clearTimeout(filterTimeout);
         const newFrequency = getRandomBetween(settings.filterMin, settings.filterMax);
-        filterNode.frequency.setValueAtTime(newFrequency, audioContext.currentTime);
+        filterNode.frequency.linearRampToValueAtTime(newFrequency, audioContext.currentTime + ramp);
 
         setBinauralBeatFreq(newFrequency);
 
@@ -216,9 +218,9 @@ const dynamicGatingLogic = () => {
     clearTimeout(gatingTimeout);
     const newTime = getRandomBetween(settings.gatingMin, settings.gatingMax);
     currentVolume = getRandomBetween(0, settings.volume);
-    if (settings.dynamicGating) gainNode.gain.setValueAtTime(currentVolume, audioContext.currentTime);
+    if (settings.dynamicGating) gainNode.gain.linearRampToValueAtTime(currentVolume, audioContext.currentTime + ramp);
     setTimeout(() => {
-        gainNode.gain.setValueAtTime(settings.volume, audioContext.currentTime);
+        gainNode.gain.linearRampToValueAtTime(settings.volume, audioContext.currentTime + ramp);
 
         // Schedule the next gating logic at the end of this one
         gatingTimeout = setTimeout(dynamicGatingLogic, newTime * getRandomBetween(700, 11000));
@@ -228,7 +230,7 @@ const dynamicGatingLogic = () => {
 
 const dynamicPanningLogic = () => {
     const panValue = getRandomBetween(-1, 1); // -1 (full left) to 1 (full right)
-    pannerNode.pan.setValueAtTime(panValue, audioContext.currentTime);
+    pannerNode.pan.linearRampToValueAtTime(panValue, audioContext.currentTime + panningRamp);
     setTimeout(dynamicPanningLogic, getRandomBetween(600, 11000));
 };
 
