@@ -63,13 +63,17 @@
             </div>
         </div>
         <div class="row justify-content-center">
-            <div class="col-12 col-md-6">
-                <div class="input-group mb-3">
+            <div class="col-12 col-md-6 d-flex justify-content-between">
+                <!-- Pick from Device -->
+                <div class="input-group mb-3 flex-grow-1 mr-2">
                     <div class="custom-file">
                         <input type="file" class="custom-file-input" id="audioInput" accept="audio/*">
-                        <label class="custom-file-label" for="audioInput">Choose file</label>
+                        <label class="custom-file-label" for="audioInput">Choose a file</label>
                     </div>
                 </div>
+        
+                <!-- Pick from Jamendo -->
+                 <button id="jamendoPickerBtn" class="btn btn-primary mb-3 flex-grow-1 ml-2">...or pick from the free online library 🎧</button>
             </div>
         </div>
         <div class="row justify-content-center mt-2">
@@ -83,7 +87,7 @@
         </div>
         <div class="row justify-content-center mt-4">
             <div class="col-12 col-md-6">
-                <audio id="audioPlayer" class="w-100" controls disabled>
+                <audio id="audioPlayer" class="w-100" crossOrigin="anonymous" controls disabled>
                     <source src="./music/bache-cello-suite-1-prelude.mp3">
                 </audio>
             </div>
@@ -553,6 +557,21 @@
         </div>
     </div>
 
+        <!-- Jamendo Library Modal -->
+    <div id="jamendoModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Pick From Our Free Library 🎧</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <ul id="jamendoTrackList"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
 
     <!-- Footer -->
     <footer class="bg-dark text-center text-white">
@@ -611,7 +630,7 @@
                     </a>
                     <!-- Feedback Button -->
                     <div class="mt-3">
-                        <button type="button" class="btn btn-outline-light" data-toggle="modal"
+                        <button type="button" class="btn btn-outline-light" id="feedbackButton" data-toggle="modal"
                             data-target="#feedbackModal">
                             Have Feedback?
                         </button>
@@ -627,7 +646,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
-        document.querySelector('.btn-primary').addEventListener('click', function () {
+        document.querySelector('#feedbackButton').addEventListener('click', function () {
             var closeButton = document.getElementById('feedback-close').click();
             var email = document.getElementById('sender').value;
             var subject = document.getElementById('subject').value;

@@ -243,10 +243,10 @@ const dynamicBinauralBeatLogic = () => {
 
 
 
-const changeAudio = (file) => {
-    const objectURL = URL.createObjectURL(file);
+const changeAudio = (file, name) => {
+    const objectURL =  file instanceof File ? URL.createObjectURL(file) : file;
     audioPlayer.src = objectURL;
-    document.getElementById('trackLabel').innerText = file.name;
+    document.getElementById('trackLabel').innerText = name;
     audioPlayer.load();
 
     if (!firstInteraction) {
@@ -298,15 +298,6 @@ const playAudio = () => {
     }, 1000);
 }
 
-const playbackSpeedDisplay = document.getElementById('playbackSpeedDisplay');
-
-audioPlayer.addEventListener('timeupdate', function () {
-    playbackSpeedDisplay.innerHTML = `Playback Rate: ${audioPlayer.playbackRate.toFixed(2)}x`;
-});
-
-audioInput.addEventListener('change', event => {
-    changeAudio(event.target.files[0]);
-});
 
 const firstInteractionListener = async () => {
     if (firstInteraction) return;
@@ -320,6 +311,15 @@ const firstInteractionListener = async () => {
     if (settings.dynamicBinauralBeat && !audioPlayer.paused) startBinauralBeats();
 }
 
+const playbackSpeedDisplay = document.getElementById('playbackSpeedDisplay');
+
+audioPlayer.addEventListener('timeupdate', function () {
+    playbackSpeedDisplay.innerHTML = `Playback Rate: ${audioPlayer.playbackRate.toFixed(2)}x`;
+});
+
+audioInput.addEventListener('change', event => {
+    changeAudio(event.target.files[0], event.target.files[0].name);
+});
 
 // Event Listeners for updating settings
 filterFrequencyMin.addEventListener('input', updateSettings);
@@ -355,8 +355,41 @@ audioPlayer.addEventListener('pause', function () {
     stopBinauralBeats();
 });
 
+const fetchJamendoTracks = (tags) => {
+    document.getElementById('jamendoPickerBtn').addEventListener('click', function (evt) {
+        evt.preventDefault();
+        fetch('https://api.jamendo.com/v3.0/tracks?client_id=45bc0c3c&format=json&lang=en&fuzzytags=classical&order=downloads_total')
+            .then(response => response.json())
+            .then(data => {
+                const trackList = document.getElementById('jamendoTrackList');
+                trackList.innerHTML = '';
+                data.results.forEach(track => {
+                    const listItem = document.createElement('li');
+                    const label = track.name + " (" + track.artist_name + ")";
+                    listItem.textContent = label;
+                    listItem.addEventListener('click', function () {
+                        console.log(track);
+                        changeAudio(track.audio, label);
+                        // // Assuming your audio element's id is "audioPlayer"
+                        // const audioPlayer = document.getElementById('audioPlayer');
+                        // audioPlayer.src = track.audio;
+                        // // Enable and load the new track
+                        // audioPlayer.disabled = false;
+                        // audioPlayer.load();
+                        // Close the modal
+                        $('#jamendoModal').modal('hide');
+                    });
+                    trackList.appendChild(listItem);
+                });
+                $('#jamendoModal').modal('show');
+            })
+            .catch(error => console.error('Error fetching Jamendo tracks:', error));
+    });
+}
+
 
 window.addEventListener('DOMContentLoaded', () => {
+    fetchJamendoTracks();
     setTimeout(() => {
         const link = document.getElementById("welcomeToNeuroTune");
         link.click();
