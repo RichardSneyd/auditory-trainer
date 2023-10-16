@@ -14,7 +14,6 @@ const registerServiceWorker = () => {
 
 // registerServiceWorker();
 
-//let defaultAudioBlob;
 let filterTimeout;
 let gatingTimeout;
 let filterInterval;
@@ -162,8 +161,12 @@ const startBinauralBeats = () => {
     if (!audioPlayer.paused) oscillatorNodeRight.start();
 }
 
+const setCurrentVolume = () => {
+    currentVolume = getRandomBetween(0, settings.volume);
+}
+
 const setBeatGain = () => {
-    const gain = getRandomBetween(0, 0.009) * currentVolume;
+    const gain = getRandomBetween(0, 0.014 * currentVolume);
     gainNodeLeft.gain.value = gain;
     gainNodeRight.gain.value = gain;
 }
@@ -172,7 +175,7 @@ const setBeatGain = () => {
 const setBinauralBeatFreq = (beatFrequency) => {
     if (!beatsPlaying) return;
     // const base = Math.max(100, beatFrequency);
-    const base = getRandomBetween(settings.filterMin, beatFrequency);
+    const base = getRandomBetween(settings.filterMin, beatFrequency) / getRandomBetween(2, 4);
     const targetWave = getRandomBetween(0.5, 19); // delta 0.5-4, theta 4-8, alpha 8-14, beta 14-30, gamma 30-100
     const low = base - targetWave / 2;
 
@@ -204,7 +207,7 @@ const dynamicGatingLogic = () => {
 
     clearTimeout(gatingTimeout);
     const newTime = getRandomBetween(settings.gatingMin, settings.gatingMax);
-    currentVolume = getRandomBetween(0, settings.volume);
+    setCurrentVolume();
     if (settings.dynamicGating) gainNode.gain.linearRampToValueAtTime(currentVolume, audioContext.currentTime + ramp);
     setTimeout(() => {
         gainNode.gain.linearRampToValueAtTime(settings.volume, audioContext.currentTime + ramp);
@@ -322,7 +325,11 @@ filterFrequencyMin.addEventListener('input', updateSettings);
 filterFrequencyMax.addEventListener('input', updateSettings);
 gatingFrequencyMin.addEventListener('input', updateSettings);
 gatingFrequencyMax.addEventListener('input', updateSettings);
-volumeControl.addEventListener('input', updateSettings);
+volumeControl.addEventListener('input', () => {
+    updateSettings();
+    setCurrentVolume();
+    setBeatGain();
+});
 dynamicFilter.addEventListener('change', updateSettings);
 dynamicGating.addEventListener('change', updateSettings);
 
