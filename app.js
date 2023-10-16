@@ -14,14 +14,6 @@ const registerServiceWorker = () => {
 
 // registerServiceWorker();
 
-// async function fetchDefaultAudioBlob() {
-//     const response = await fetch('./music/mozart-overture-to-the-marriage-of-figaro-k.mp3');
-//     const blob = await response.blob();
-//     return blob;
-// }
-
-//const defaultMusicFilePath = './music/mozart-overture-to-the-marriage-of-figaro-k.mp3';
-//const defaultMusicFileName = 'Overture to the Marriage of Figaro - Mozart';
 //let defaultAudioBlob;
 let filterTimeout;
 let gatingTimeout;
@@ -33,11 +25,6 @@ let beatsPlaying = false;
 let currentVolume = 1;
 let ramp = .15;
 let panningRamp = .55;
-
-// const loadDefaultAudioBlob = async () => {
-//     defaultAudioBlob = await fetchDefaultAudioBlob();
-//     // changeAudio(defaultAudioBlob);
-// }
 
 // JavaScript Audio Context
 let audioContext;
