@@ -358,7 +358,7 @@ audioPlayer.addEventListener('pause', function () {
 const fetchJamendoTracks = (tags) => {
     document.getElementById('jamendoPickerBtn').addEventListener('click', function (evt) {
         evt.preventDefault();
-        fetch('https://api.jamendo.com/v3.0/tracks?client_id=45bc0c3c&format=json&lang=en&fuzzytags=classical&order=downloads_total')
+        fetch('https://api.jamendo.com/v3.0/tracks?client_id=45bc0c3c&format=json&lang=en&fuzzytags=classical+jazz&order=popularity_total&vocalinstrumental=instrumental')
             .then(response => response.json())
             .then(data => {
                 const trackList = document.getElementById('jamendoTrackList');
