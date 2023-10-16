@@ -166,7 +166,7 @@ const setCurrentVolume = () => {
 }
 
 const setBeatGain = () => {
-    const gain = getRandomBetween(0, 0.014 * currentVolume);
+    const gain = getRandomBetween(0, 0.019 * currentVolume);
     gainNodeLeft.gain.value = gain;
     gainNodeRight.gain.value = gain;
 }
