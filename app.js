@@ -370,13 +370,6 @@ const fetchJamendoTracks = (tags) => {
                     listItem.addEventListener('click', function () {
                         console.log(track);
                         changeAudio(track.audio, label);
-                        // // Assuming your audio element's id is "audioPlayer"
-                        // const audioPlayer = document.getElementById('audioPlayer');
-                        // audioPlayer.src = track.audio;
-                        // // Enable and load the new track
-                        // audioPlayer.disabled = false;
-                        // audioPlayer.load();
-                        // Close the modal
                         $('#jamendoModal').modal('hide');
                     });
                     trackList.appendChild(listItem);
