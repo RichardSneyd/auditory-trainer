@@ -175,7 +175,7 @@ const setBeatGain = () => {
 const setBinauralBeatFreq = (beatFrequency) => {
     if (!beatsPlaying) return;
     // const base = Math.max(100, beatFrequency);
-    const base = getRandomBetween(settings.filterMin, beatFrequency) / getRandomBetween(2, 4);
+    const base = getRandomBetween(settings.filterMin, beatFrequency) / getRandomBetween(3, 6);
     const targetWave = getRandomBetween(0.5, 19); // delta 0.5-4, theta 4-8, alpha 8-14, beta 14-30, gamma 30-100
     const low = base - targetWave / 2;
 
@@ -183,7 +183,7 @@ const setBinauralBeatFreq = (beatFrequency) => {
     const lowLeft = getRandomBetween(0, 1) > 0.5;
 
     const rampFactor = getRandomBetween(0.7, 2.5);
-    oscillatorNodeLeft.frequency.linearRampToValueAtTime(lowLeft ? low : high, audioContext.currentTime + (ramp * rampFactor));
+    oscillatorNodeLeft.frequency.linearRampToValueAtTime(lowLeft ? low : high, audioContext.currentTime + ramp * rampFactor);
     oscillatorNodeRight.frequency.linearRampToValueAtTime(lowLeft ? high : low, audioContext.currentTime + ramp * rampFactor);
 }
 
