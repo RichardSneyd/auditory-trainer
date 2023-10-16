@@ -182,8 +182,9 @@ const setBinauralBeatFreq = (beatFrequency) => {
     const high = base + targetWave / 2;
     const lowLeft = getRandomBetween(0, 1) > 0.5;
 
-    oscillatorNodeLeft.frequency.linearRampToValueAtTime(lowLeft ? low : high, audioContext.currentTime + ramp);
-    oscillatorNodeRight.frequency.linearRampToValueAtTime(lowLeft ? high : low, audioContext.currentTime + ramp);
+    const rampFactor = getRandomBetween(0.7, 2.5);
+    oscillatorNodeLeft.frequency.linearRampToValueAtTime(lowLeft ? low : high, audioContext.currentTime + (ramp * rampFactor));
+    oscillatorNodeRight.frequency.linearRampToValueAtTime(lowLeft ? high : low, audioContext.currentTime + ramp * rampFactor);
 }
 
 // Dynamic Filter Logic
@@ -195,7 +196,7 @@ const dynamicFilterLogic = () => {
 
         setBinauralBeatFreq(newFrequency);
 
-        const newTime = getRandomBetween(500, 6000);
+        const newTime = getRandomBetween(900, 10000);
 
         // Schedule the next filter logic at the end of this one
         filterTimeout = setTimeout(dynamicFilterLogic, newTime);
