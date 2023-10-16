@@ -115,8 +115,7 @@ const updateSettings = () => {
     settings.dynamicGating = dynamicGating.checked;
     settings.dynamicPlaybackRate = dynamicPlaybackRate.checked;
     settings.dynamicBinauralBeat = dyanmicBinauralBeat.checked;
-    dynamicPlaybackLogic();
-    dynamicBinauralBeatLogic();
+  //  dynamicBinauralBeatLogic();
 
     // Apply immediate changes to the audio nodes
     gainNode.gain.setValueAtTime(settings.volume, audioContext.currentTime);
@@ -337,8 +336,15 @@ gatingFrequencyMax.addEventListener('input', updateSettings);
 volumeControl.addEventListener('input', updateSettings);
 dynamicFilter.addEventListener('change', updateSettings);
 dynamicGating.addEventListener('change', updateSettings);
-dynamicPlaybackRate.addEventListener('change', updateSettings);
-dyanmicBinauralBeat.addEventListener('change', updateSettings);
+
+dynamicPlaybackRate.addEventListener('change', () => {
+    updateSettings();
+    dynamicPlaybackLogic();
+});
+dyanmicBinauralBeat.addEventListener('change', ()=> {
+    updateSettings();
+    dynamicBinauralBeatLogic();
+});
 
 audioPlayer.addEventListener('play', function () {
    // if (audioPlayer.disabled) return;
