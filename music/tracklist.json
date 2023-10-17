@@ -20,6 +20,21 @@
       "audio": "/music/chopin-nocturne-2-e-flat-major.mp3"
     },
     {
+      "name": "Piano Sonata No. 14 \"Moonlight\": I. Adagio sostenuto",
+      "artist_name": "Beethoven",
+      "audio": "/music/beethoven-piano-sonata-14-moonlight.mp3"
+    },
+    {
+      "name": "Symphony No. 9 \"Choral\": Finale (excerpt)",
+      "artist_name": "Beethoven",
+      "audio": "/music/beethoven-symphony-9-choral-excerpt.mp3"
+    },
+    {
+      "name": "String Quartet No. 21 \"Prussian\": II. Andante",
+      "artist_name": "Mozart",
+      "audio": "/music/mozart-string-quartet-21-prussian.mp3"
+    },
+    {
       "name": "Don Giovanni",
       "artist_name": "Mozart",
       "audio": "/music/mozart-don-giovanni.mp3"
