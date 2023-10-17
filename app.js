@@ -355,34 +355,35 @@ audioPlayer.addEventListener('pause', function () {
     stopBinauralBeats();
 });
 
-const fetchJamendoTracks = (tags) => {
-    document.getElementById('jamendoPickerBtn').addEventListener('click', function (evt) {
+const fetchSampleTracks = () => {
+    document.getElementById('trackPickerBtn').addEventListener('click', function (evt) {
         evt.preventDefault();
-        fetch('https://api.jamendo.com/v3.0/tracks?client_id=45bc0c3c&format=json&lang=en&fuzzytags=classical+jazz&order=popularity_total&vocalinstrumental=instrumental')
+        fetch('/music/tracklist.json') // Fetch track information from the JSON file
             .then(response => response.json())
             .then(data => {
-                const trackList = document.getElementById('jamendoTrackList');
+                const trackList = document.getElementById('sampleTrackList');
                 trackList.innerHTML = '';
-                data.results.forEach(track => {
+                data.forEach(track => { // Iterate through the array of tracks
                     const listItem = document.createElement('li');
                     const label = track.name + " (" + track.artist_name + ")";
                     listItem.textContent = label;
                     listItem.addEventListener('click', function () {
                         console.log(track);
-                        changeAudio(track.audio, label);
-                        $('#jamendoModal').modal('hide');
+                        changeAudio(track.audio, label); // Update the audio player's source
+                        $('#sampleTrackModal').modal('hide');
                     });
                     trackList.appendChild(listItem);
                 });
-                $('#jamendoModal').modal('show');
+                $('#sampleTrackModal').modal('show');
             })
-            .catch(error => console.error('Error fetching Jamendo tracks:', error));
+            .catch(error => console.error('Error fetching sample tracks:', error));
     });
 }
 
 
+
 window.addEventListener('DOMContentLoaded', () => {
-    fetchJamendoTracks();
+    fetchSampleTracks();
     setTimeout(() => {
         const link = document.getElementById("welcomeToNeuroTune");
         link.click();
