@@ -1,75 +1,70 @@
 @media (max-width: 768px) {
-    .container, .col-md-6 {
-      margin-left: 0;
-      margin-right: 0;
-      padding-left: 15px;
-      padding-right: 15px;
-    }
-    .inline-mobile {
-      display: inline-block;
-    }
+  .container,
+  .col-md-6 {
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 15px;
+    padding-right: 15px;
   }
-
-  .inline-icon {
-    height: 1.3em;  
-    width: auto;  
-    vertical-align: middle;  
-    padding-left: .5em;
-    padding-right: .5em;
+  .inline-mobile {
+    display: inline-block;
   }
+}
 
-  .inline-icon-2 {
-    height: 3em;  
-    width: auto;  
-    vertical-align: middle;  
-    /* padding-left: 1em; */
-    /* padding-right: 1em; */
-    margin-right: 0.5em;
-    /* border-radius: 0.6em !important;  */
-    /* opacity: .8; */
-  }
+.inline-icon {
+  height: 1.3em;
+  width: auto;
+  vertical-align: middle;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
 
-  .translucent {
-    opacity: 0.8;
-  }
+.inline-icon-2 {
+  height: 3em;
+  width: auto;
+  vertical-align: middle;
+  margin-right: 0.5em;
+}
 
-  body::before {
-    content: "";
-    position: fixed; /* Fixed/sticky position */
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: -1; 
-  
-    background-image: url('./icons/icon-512x512.png');
-    background-size:contain;
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    opacity: 0.06; 
-    
-  
-  }
+.translucent {
+  opacity: 0.8;
+}
 
-  /* Increase the size of the buttons */
+body::before {
+  content: "";
+  position: fixed; 
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+
+  background-image: url("./icons/icon-512x512.png");
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  opacity: 0.06;
+}
+
+/* Increase the size of the buttons */
 .modal-button {
-  font-size: 20px;      
-  padding: 15px 30px;   
-  margin: 10px;  
-  border: 3px solid black;       
+  font-size: 20px;
+  padding: 15px 30px;
+  margin: 10px;
+  border: 3px solid black;
 }
 
 .modal-button:hover {
-  background-color: #000; /* This changes the button's background color to black on hover. */
-  color: white; 
+  background-color: #000; 
+  color: white;
 }
-/* Center the buttons within the modal */
+
 .modal-button-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: row; 
+  flex-direction: row;
 }
 
 .centered {
@@ -81,9 +76,9 @@
 .margin-left {
   margin-left: 1em;
 }
-  
+
 #sampleTrackList {
-  list-style-type:none;
+  list-style-type: none;
   padding: 1em;
   text-align: center;
 }
@@ -98,5 +93,9 @@
 }
 
 .padding-low {
-  padding: .2em;
+  padding: 0.2em;
+}
+
+.margin-bottom {
+  margin-bottom: 0.2em;
 }
