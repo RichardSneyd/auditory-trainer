@@ -56,7 +56,7 @@
             <div class="col-12 col-md-6">
                 <p>NeuroTune<sup>tm</sup> is a free, dynamic auditory intergration tool! Just select your prefered music
                     file from your device - we recommend complex, low to mid tempo music such as
-                    classical or jazz, but it's your choice! Use headphones (bone conduction preferred) for the most
+                    classical or jazz, but it's your choice! <em>Use headphones (bone conduction preferred)</em> for the most
                     potent effects.
                     <a href="#" data-toggle="modal" data-target="#infoModal">Learn more</a>.
                 </p>
@@ -87,9 +87,14 @@
         </div>
         <div class="row justify-content-center mt-4">
             <div class="col-12 col-md-6">
-                <audio id="audioPlayer" class="w-100" crossOrigin="anonymous" controls disabled>
-                    <source src="./music/bach-cello-suite-1-prelude.mp3">
-                </audio>
+                <div class="d-flex align-items-center">
+                    <!-- Audio Player -->
+                    <audio id="audioPlayer" class="w-100" crossOrigin="anonymous" controls disabled>
+                        <source src="./music/bach-cello-suite-1-prelude.mp3">
+                    </audio>
+                    <!-- Shuffle Button -->
+                           <button id="shuffleBtn" class="btn btn-success ms-2 margin-left">Shuffle</button>
+                </div>
             </div>
         </div>
 

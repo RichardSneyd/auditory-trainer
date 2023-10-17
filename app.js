@@ -42,6 +42,7 @@
     const dynamicGating = document.getElementById('dynamicGating');
     const dynamicPlaybackRate = document.getElementById('dynamicPlaybackRate');
     const dyanmicBinauralBeat = document.getElementById('dynamicBinauralBeat');
+    const shuffleBtn = document.getElementById("shuffleBtn");
 
     // Audio Nodes
     let sourceNode;
@@ -71,7 +72,8 @@
         dynamicFilter: dynamicFilter.checked,
         dynamicGating: dynamicGating.checked,
         dynamicPlaybackRate: dynamicPlaybackRate.checked,
-        dynamicBinauralBeat: dyanmicBinauralBeat.checked
+        dynamicBinauralBeat: dyanmicBinauralBeat.checked,
+        shuffle: true
     };
 
     // Initialize Audio Nodes and connect them
@@ -308,6 +310,11 @@
         if (settings.dynamicBinauralBeat && !audioPlayer.paused) startBinauralBeats();
     }
 
+    const onPlayPressed = () => {
+        if (settings.dynamicBinauralBeat && !audioPlayer.paused) startBinauralBeats();
+        playAudio();
+    }
+
     const playbackSpeedDisplay = document.getElementById('playbackSpeedDisplay');
 
     audioPlayer.addEventListener('timeupdate', function () {
@@ -341,10 +348,7 @@
     });
 
     audioPlayer.addEventListener('play', function () {
-        // if (audioPlayer.disabled) return;
-        firstPlay = true;
-        if (settings.dynamicBinauralBeat && !audioPlayer.paused) startBinauralBeats();
-        playAudio();
+        onPlayPressed();
     });
 
     audioPlayer.addEventListener('pause', function () {
@@ -385,15 +389,32 @@
     const randomTrack = () => {
         const index = Math.floor(getRandomBetween(0, sampleTracks.length - 1));
         sampleTracks[index].element.click();
+        audioPlayer.play();
+        onPlayPressed();
     }
 
     window.addEventListener('DOMContentLoaded', () => {
         fetchSampleTracks();
-        setTimeout(randomTrack, 1000);
         setTimeout(() => {
             const link = document.getElementById("welcomeToNeuroTune");
             link.click();
             window.addEventListener('click', firstInteractionListener);
         }, 200);
+
+        shuffleBtn.addEventListener("click", function () {
+            if (this.classList.contains("btn-secondary")) {
+                this.classList.remove("btn-secondary");
+                this.classList.add("btn-success");
+                settings.shuffle = true;
+            } else {
+                this.classList.remove("btn-success");
+                this.classList.add("btn-secondary");
+                settings.shuffle = false;
+            }
+        });
+
+        audioPlayer.addEventListener("ended", function () {
+            if (settings.shuffle) randomTrack();
+        });
     })
 })();

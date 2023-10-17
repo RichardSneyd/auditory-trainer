@@ -77,6 +77,10 @@
   margin-right: auto;
   text-align: center;
 }
+
+.margin-left {
+  margin-left: 1em;
+}
   
 #sampleTrackList {
   list-style-type:none;
