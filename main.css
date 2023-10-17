@@ -78,16 +78,16 @@
   text-align: center;
 }
   
-#jamendoTrackList {
+#sampleTrackList {
   list-style-type:none;
   padding: 1em;
   text-align: center;
 }
-#jamendoTrackList li {
+#sampleTrackList li {
   padding: 10px;
   cursor: pointer;
 }
-#jamendoTrackList li:hover {
+#sampleTrackList li:hover {
   background-color: #5379f5;
   color: white;
   border-radius: 1em;

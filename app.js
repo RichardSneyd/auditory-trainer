@@ -358,18 +358,18 @@ audioPlayer.addEventListener('pause', function () {
 const fetchSampleTracks = () => {
     document.getElementById('trackPickerBtn').addEventListener('click', function (evt) {
         evt.preventDefault();
-        fetch('/music/tracklist.json') // Fetch track information from the JSON file
+        fetch('/music/tracklist.json') 
             .then(response => response.json())
             .then(data => {
                 const trackList = document.getElementById('sampleTrackList');
                 trackList.innerHTML = '';
-                data.forEach(track => { // Iterate through the array of tracks
+                data.forEach(track => { 
                     const listItem = document.createElement('li');
                     const label = track.name + " (" + track.artist_name + ")";
                     listItem.textContent = label;
                     listItem.addEventListener('click', function () {
                         console.log(track);
-                        changeAudio(track.audio, label); // Update the audio player's source
+                        changeAudio(track.audio, label); 
                         $('#sampleTrackModal').modal('hide');
                     });
                     trackList.appendChild(listItem);
