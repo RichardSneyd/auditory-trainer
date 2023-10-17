@@ -13,7 +13,7 @@
         }
     }
 
-    registerServiceWorker();
+    // registerServiceWorker();
 
     let filterTimeout;
     let gatingTimeout;
