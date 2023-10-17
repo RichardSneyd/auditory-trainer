@@ -5,9 +5,29 @@
       "audio": "/music/bach-cello-suite-1-prelude.mp3"
     },
     {
+      "name": "Claire de Lune",
+      "artist_name": "Debussy",
+      "audio": "/music/debussy-clair-de-lune.mp3"
+    },
+    {
+      "name": "Prelude to the Afternoon of a Faun",
+      "artist_name": "Debussy",
+      "audio": "/music/debussy-prelude-to-the-afternoon-of-a-faun.mp3"
+    },
+    {
+      "name": "Nocturne No. 2 in E-flat Major, Op. 9, No. 2",
+      "artist_name": "Chopin",
+      "audio": "/music/chopin-nocturne-2-e-flat-major.mp3"
+    },
+    {
+      "name": "Don Giovanni",
+      "artist_name": "Mozart",
+      "audio": "/music/mozart-don-giovanni.mp3"
+    },
+    {
       "name": "Overture to the Marriage of Figaro",
       "artist_name": "Mozart",
       "audio": "/music/mozart-overture-to-the-marriage-of-figaro-k.mp3"
     }
-
+   
   ]
