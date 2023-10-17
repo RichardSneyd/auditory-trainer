@@ -19,35 +19,37 @@
 </head>
 
 <body>
-   <!-- Navbar -->
-<nav class="sticky-top navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand transucent" href="#"><img class="inline-icon-2 rounded" src="./icons/icon-128x128.png"
-            alt="Icon">NeuroTune<sup>tm</sup></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav mr-auto"> <!-- Existing items -->
-            <li class="nav-item active">
-                <a class="nav-link" href="#container">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id="whatIsNeuroTune" href="#" data-toggle="modal" data-target="#infoModal">What is NeuroTune<sup>tm</sup>? </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#" data-toggle="modal" data-target="#theScienceModal">The Science</a>
-            </li>
-        </ul>
-        <ul class="navbar-nav ml-auto"> <!-- New items aligned to the right -->
-            <li class="nav-item">
-                <a title="Buy Me a Coffee" class="nav-link" href="https://www.buymeacoffee.com/richardsneyd" target="_blank">
-                    <i class="fas fa-coffee"> Buy Me a Coffee</i>
-                </a>
-            </li>
-        </ul>
-    </div>
-</nav>
+    <!-- Navbar -->
+    <nav class="sticky-top navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand transucent" href="#"><img class="inline-icon-2 rounded" src="./icons/icon-128x128.png"
+                alt="Icon">NeuroTune<sup>tm</sup></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto"> <!-- Existing items -->
+                <li class="nav-item active">
+                    <a class="nav-link" href="#container">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="whatIsNeuroTune" href="#" data-toggle="modal" data-target="#infoModal">What
+                        is NeuroTune<sup>tm</sup>? </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-toggle="modal" data-target="#theScienceModal">The Science</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto"> <!-- New items aligned to the right -->
+                <li class="nav-item">
+                    <a title="Buy Me a Coffee" class="nav-link" href="https://www.buymeacoffee.com/richardsneyd"
+                        target="_blank">
+                        <i class="fas fa-coffee"> Buy Me a Coffee</i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
 
     <div class="container white-bg mt-5" id="container">
@@ -56,14 +58,16 @@
             <div class="col-12 col-md-6">
                 <p>NeuroTune<sup>tm</sup> is a free, dynamic auditory intergration tool! Just select your prefered music
                     file from your device - we recommend complex, low to mid tempo music such as
-                    classical or jazz, but it's your choice! <em>Use headphones (bone conduction preferred)</em> for the most
+                    classical or jazz, but it's your choice! <em>Use headphones (bone conduction preferred)</em> for the
+                    most
                     potent effects.
                     <a href="#" data-toggle="modal" data-target="#infoModal">Learn more</a>.
                 </p>
             </div>
         </div>
-        <div class="row justify-content-center">
-            <div class="col-12 col-md-6 d-flex justify-content-between">
+        <div class="row justify-content-center no-gutters">
+            <div class="col-6 col-md-3 d-flex">
+
                 <!-- Pick from Device -->
                 <div class="input-group mb-3 flex-grow-1 mr-2">
                     <div class="custom-file">
@@ -71,11 +75,16 @@
                         <label class="custom-file-label" for="audioInput">Choose a file</label>
                     </div>
                 </div>
-        
-                <!-- Pick from Jamendo -->
-                 <button id="trackPickerBtn" class="btn btn-primary mb-3 flex-grow-1 ml-2">...or pick from our free sample library 🎧</button>
+
+
+            </div>
+            <div class="col-6 col-md-3 d-flex">
+                <!-- Pick from Library -->
+                <button id="trackPickerBtn" class="btn btn-primary mb-3 flex-grow-1 ml-2" style="flex-basis: 0;">Free
+                    Library 🎧</button>
             </div>
         </div>
+
         <div class="row justify-content-center mt-2">
             <div class="col-12 col-md-6 d-flex justify-content-between align-items-center">
                 <div id="trackLabel">J.S. Bach - Cello Suite No. 1: Prelude</div>
@@ -93,7 +102,7 @@
                         <source src="./music/bach-cello-suite-1-prelude.mp3">
                     </audio>
                     <!-- Shuffle Button -->
-                           <button id="shuffleBtn" class="btn btn-success ms-2 margin-left">Shuffle</button>
+                    <button id="shuffleBtn" class="btn btn-success ms-2 margin-left">Shuffle</button>
                 </div>
             </div>
         </div>
@@ -244,36 +253,36 @@
                 <div class="modal-footer">
                     <!-- Social Media Icons -->
                     <div class="mt-2 centered">
-                       <!-- Facebook -->
-                       <a class="btn btn-outline btn-floating m-1"
-                           href="https://www.facebook.com/sharer/sharer.php?u=https://richardsneyd.github.io/auditory-trainer/"
-                           target="_blank" role="button">
-                           <i class="fab fa-facebook-f"></i>
-                       </a>
-                       <!-- Twitter -->
-                       <a class="btn btn-outline btn-floating m-1"
-                           href="https://twitter.com/intent/tweet?url=https://richardsneyd.github.io/auditory-trainer/"
-                           target="_blank" role="button">
-                           <i class="fab fa-twitter"></i>
-                       </a>
-                       <!-- LinkedIn -->
-                       <a class="btn btn-outline btn-floating m-1"
-                           href="https://www.linkedin.com/shareArticle?url=https://richardsneyd.github.io/auditory-trainer/"
-                           target="_blank" role="button">
-                           <i class="fab fa-linkedin-in"></i>
-                       </a>
-                       <!-- Instagram -->
-                       <a class="btn btn-outline btn-floating m-1" href="https://www.instagram.com" target="_blank"
-                           role="button">
-                           <i class="fab fa-instagram"></i>
-                       </a>
-                       <!-- Youtube -->
-                       <a class="btn btn-outline btn-floating m-1" href="https://www.youtube.com" target="_blank"
-                           role="button">
-                           <i class="fab fa-youtube"></i>
-                       </a>
-    
-                   </div>
+                        <!-- Facebook -->
+                        <a class="btn btn-outline btn-floating m-1"
+                            href="https://www.facebook.com/sharer/sharer.php?u=https://richardsneyd.github.io/auditory-trainer/"
+                            target="_blank" role="button">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <!-- Twitter -->
+                        <a class="btn btn-outline btn-floating m-1"
+                            href="https://twitter.com/intent/tweet?url=https://richardsneyd.github.io/auditory-trainer/"
+                            target="_blank" role="button">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <!-- LinkedIn -->
+                        <a class="btn btn-outline btn-floating m-1"
+                            href="https://www.linkedin.com/shareArticle?url=https://richardsneyd.github.io/auditory-trainer/"
+                            target="_blank" role="button">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <!-- Instagram -->
+                        <a class="btn btn-outline btn-floating m-1" href="https://www.instagram.com" target="_blank"
+                            role="button">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <!-- Youtube -->
+                        <a class="btn btn-outline btn-floating m-1" href="https://www.youtube.com" target="_blank"
+                            role="button">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+
+                    </div>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
@@ -401,7 +410,7 @@
                             role="button">
                             <i class="fab fa-youtube"></i>
                         </a>
-    
+
                     </div>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
@@ -484,7 +493,7 @@
                             role="button">
                             <i class="fab fa-youtube"></i>
                         </a>
-    
+
                     </div>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
@@ -562,7 +571,7 @@
         </div>
     </div>
 
-        <!-- Jamendo Library Modal -->
+    <!-- Jamendo Library Modal -->
     <div id="sampleTrackModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -576,7 +585,7 @@
             </div>
         </div>
     </div>
-    
+
 
     <!-- Footer -->
     <footer class="bg-dark text-center text-white">

@@ -96,3 +96,7 @@
   color: white;
   border-radius: 1em;
 }
+
+.padding-low {
+  padding: .2em;
+}
