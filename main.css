@@ -99,3 +99,7 @@ body::before {
 .margin-bottom {
   margin-bottom: 0.2em;
 }
+
+.margin-top {
+  margin-top: 0.5em;
+}
