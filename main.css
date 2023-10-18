@@ -103,3 +103,24 @@ body::before {
 .margin-top {
   margin-top: 0.5em;
 }
+
+.negative-margin-bottom {
+  margin-bottom: -0.2em;
+}
+
+.negative-margin-left {
+  margin-left: -0.4em;
+}
+
+.subtle-link {
+  color: black;
+}
+
+.subtle-link:hover {
+  text-decoration: none;
+  /* text-shadow: 2px 2px #ff0000; */
+}
+
+.fas.fa-cog {
+  margin-right: .4em; /* adjust as needed */
+}

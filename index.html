@@ -110,65 +110,81 @@
         <!-- Settings -->
         <div class="row justify-content-center mt-4">
             <div class="col-12 col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Dynamic Settings</h5>
+                <div id="settingsAccordion">
+                    <div class="card">
+                        <!-- Card Header -->
+                        <div class="card-header" id="dynamicSettingsHeader">
+                            <h5 class="mb-0">
+                                <a class="negative-margin-bottom negative-margin-left subtle-link" type="button" data-toggle="collapse"
+                                    data-target="#dynamicSettingsContent" aria-expanded="true"
+                                    aria-controls="dynamicSettingsContent">
+                                    <i class="fas fa-cog"></i> Dynamic Settings
+                            </a>
+                            </h5>
+                        </div>
+                        <!-- Card Content -->
+                        <div id="dynamicSettingsContent" class="collapse" aria-labelledby="dynamicSettingsHeader"
+                            data-parent="#settingsAccordion">
+                            <div class="card-body">
+                                <!-- <h5 class="card-title">Dynamic Settings</h5> -->
 
-                        <!-- Filter Frequency Range -->
-                        <h6 class="margin-top">Filter Frequency Ranage (Hz): </h6>
-                        <div class="row">
-                            <div class="col-md-6 col-6">
-                                <label for="filterFrequencyMin">Min (Hz):</label>
-                                <input type="number" class="form-control" id="filterFrequencyMin" min="20" max="20000"
-                                    step="1" value="200">
+                                <!-- Filter Frequency Range -->
+                                <h6 class="margin-top">Filter Frequency Ranage (Hz): </h6>
+                                <div class="row">
+                                    <div class="col-md-6 col-6">
+                                        <label for="filterFrequencyMin">Min (Hz):</label>
+                                        <input type="number" class="form-control" id="filterFrequencyMin" min="20"
+                                            max="20000" step="1" value="200">
+                                    </div>
+                                    <div class="col-md-6 col-6">
+                                        <label for="filterFrequencyMax">Max (Hz): </label>
+                                        <input type="number" class="form-control" id="filterFrequencyMax" min="20"
+                                            max="20000" step="1" value="7700">
+                                    </div>
+                                </div>
+
+                                <!-- Gating Frequency Range -->
+                                <h6 class="margin-top">Gating Frequency Ranage (s): </h6>
+                                <div class="row mt-3">
+                                    <div class="col-md-6 col-6">
+                                        <label for="gatingFrequencyMin">Min:</label>
+                                        <input type="number" class="form-control" id="gatingFrequencyMin" min="0.5"
+                                            max="10" step="0.1" value="0.8">
+                                    </div>
+                                    <div class="col-md-6 col-6">
+                                        <label for="gatingFrequencyMax">Max:</label>
+                                        <input type="number" class="form-control" id="gatingFrequencyMax" min="0.5"
+                                            max="10" step="0.1" value="7.2">
+                                    </div>
+                                </div>
+
+                                <!-- Volume Control -->
+                                <label class="mt-3" for="volumeControl">Volume</label>
+                                <input type="range" class="custom-range" id="volumeControl" min="0" max="1" step="0.01"
+                                    value="0.9">
+
+                                <!-- Dynamic Filter & Gating Switch -->
+                                <div class="form-check mt-3">
+                                    <input class="form-check-input" type="checkbox" id="dynamicFilter" checked>
+                                    <label class="form-check-label" for="dynamicFilter">Dynamic Filtering</label>
+                                </div>
+                                <div class="form-check mt-3">
+                                    <input class="form-check-input" type="checkbox" id="dynamicGating" checked>
+                                    <label class="form-check-label" for="dynamicGating">Dynamic Gating</label>
+                                </div>
+                                <div class="form-check mt-3">
+                                    <input class="form-check-input" type="checkbox" id="dynamicBinauralBeat" checked>
+                                    <label class="form-check-label" for="dynamicBinauralBeat">Dynamic Binaural Beat
+                                        Layering</label>
+                                </div>
+                                <div class="form-check mt-3">
+                                    <input class="form-check-input" type="checkbox" id="dynamicPlaybackRate">
+                                    <label class="form-check-label" for="dynamicPlaybackRate">Dynamic Playback
+                                        Rate</label>
+                                </div>
+
                             </div>
-                            <div class="col-md-6 col-6">
-                                <label for="filterFrequencyMax">Max (Hz): </label>
-                                <input type="number" class="form-control" id="filterFrequencyMax" min="20" max="20000"
-                                    step="1" value="7700">
-                            </div>
                         </div>
-
-                        <!-- Gating Frequency Range -->
-                        <h6 class="margin-top">Gating Frequency Ranage (s): </h6>
-                        <div class="row mt-3">
-                            <div class="col-md-6 col-6">
-                                <label for="gatingFrequencyMin">Min:</label>
-                                <input type="number" class="form-control" id="gatingFrequencyMin" min="0.5" max="10"
-                                    step="0.1" value="0.8">
-                            </div>
-                            <div class="col-md-6 col-6">
-                                <label for="gatingFrequencyMax">Max:</label>
-                                <input type="number" class="form-control" id="gatingFrequencyMax" min="0.5" max="10"
-                                    step="0.1" value="7.2">
-                            </div>
-                        </div>
-
-                        <!-- Volume Control -->
-                        <label class="mt-3" for="volumeControl">Volume</label>
-                        <input type="range" class="custom-range" id="volumeControl" min="0" max="1" step="0.01"
-                            value="0.9">
-
-                        <!-- Dynamic Filter & Gating Switch -->
-                        <div class="form-check mt-3">
-                            <input class="form-check-input" type="checkbox" id="dynamicFilter" checked>
-                            <label class="form-check-label" for="dynamicFilter">Dynamic Filtering</label>
-                        </div>
-                        <div class="form-check mt-3">
-                            <input class="form-check-input" type="checkbox" id="dynamicGating" checked>
-                            <label class="form-check-label" for="dynamicGating">Dynamic Gating</label>
-                        </div>
-                        <div class="form-check mt-3">
-                            <input class="form-check-input" type="checkbox" id="dynamicBinauralBeat" checked>
-                            <label class="form-check-label" for="dynamicBinauralBeat">Dynamic Binaural Beat
-                                Layering</label>
-                        </div>
-                        <div class="form-check mt-3">
-                            <input class="form-check-input" type="checkbox" id="dynamicPlaybackRate">
-                            <label class="form-check-label" for="dynamicPlaybackRate">Dynamic Playback
-                                Rate</label>
-                        </div>
-
                     </div>
                 </div>
             </div>
