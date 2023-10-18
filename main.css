@@ -97,7 +97,7 @@ body::before {
 }
 
 .margin-bottom {
-  margin-bottom: 0.2em;
+  margin-bottom: 0.5em;
 }
 
 .margin-top {
@@ -118,6 +118,7 @@ body::before {
 
 .subtle-link:hover {
   text-decoration: none;
+  background:none;
 }
 
 .fas.fa-cog {
