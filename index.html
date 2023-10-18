@@ -115,18 +115,24 @@
                         <!-- Card Header -->
                         <div class="card-header" id="dynamicSettingsHeader">
                             <h5 class="mb-0">
-                                <a class="negative-margin-bottom negative-margin-left subtle-link" type="button" data-toggle="collapse"
-                                    data-target="#dynamicSettingsContent" aria-expanded="true"
+                                <a class="negative-margin-bottom negative-margin-left subtle-link" type="button"
+                                    data-toggle="collapse" data-target="#dynamicSettingsContent" aria-expanded="true"
                                     aria-controls="dynamicSettingsContent">
                                     <i class="fas fa-cog"></i> Dynamic Settings
-                            </a>
+                                </a>
                             </h5>
                         </div>
+
                         <!-- Card Content -->
                         <div id="dynamicSettingsContent" class="collapse" aria-labelledby="dynamicSettingsHeader"
                             data-parent="#settingsAccordion">
                             <div class="card-body">
                                 <!-- <h5 class="card-title">Dynamic Settings</h5> -->
+                                <!-- Volume Control -->
+                                <label class="mt-3" for="volumeControl">Volume:</label>
+                                <input type="range" class="custom-range" id="volumeControl" min="0" max="1" step="0.01"
+                                    value="0.9">
+
 
                                 <!-- Filter Frequency Range -->
                                 <h6 class="margin-top">Filter Frequency Ranage (Hz): </h6>
@@ -157,11 +163,6 @@
                                             max="10" step="0.1" value="7.2">
                                     </div>
                                 </div>
-
-                                <!-- Volume Control -->
-                                <label class="mt-3" for="volumeControl">Volume</label>
-                                <input type="range" class="custom-range" id="volumeControl" min="0" max="1" step="0.01"
-                                    value="0.9">
 
                                 <!-- Dynamic Filter & Gating Switch -->
                                 <div class="form-check mt-3">
