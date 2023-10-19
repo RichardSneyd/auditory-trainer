@@ -119,14 +119,19 @@
                 <div id="settingsAccordion">
                     <div class="card">
                         <!-- Card Header -->
-                        <div class="card-header" id="dynamicSettingsHeader">
+                        <div class="card-header d-flex" id="dynamicSettingsHeader">
                             <h5 class="mb-0">
                                 <button class="plain" type="button" data-toggle="collapse"
                                     data-target="#dynamicSettingsContent" aria-expanded="true"
                                     aria-controls="dynamicSettingsContent">
-                                    <i class="fas fa-cog"></i> Advanced Settings...
+                                    <i class="fas fa-cog"></i> Advanced Settings
                                 </button>
                             </h5>
+                            <button type="button" class="btn btn-secondary small ml-auto" data-toggle="tooltip"
+                            data-placement="top"
+                            title="Use these settings to customise your dynamic sound stimulation experience. If you're unsure about anything, just stick with the defaults.">
+                            ?
+                        </button>
                         </div>
 
                         <!-- Card Content -->
@@ -134,7 +139,12 @@
                             data-parent="#settingsAccordion">
                             <div class="card-body">
                                 <!-- Volume Control -->
-                                <label class="mt-3" for="volumeControl">Volume:</label>
+                                <label class="mt-3" for="volumeControl">Master Volume (Max):</label>
+                                <button type="button" class="btn btn-secondary small" data-toggle="tooltip"
+                                data-placement="top"
+                                title="The maximum volume. When dynamic volume gating is enabled, the volume will be dynamically altered while you listen, but never go above the maximum level you set here.">
+                                ?
+                            </button>
                                 <input type="range" class="custom-range" id="volumeControl" min="0" max="1" step="0.01"
                                     value="0.9">
 
@@ -142,6 +152,11 @@
                                 <div class="form-check mt-3">
                                     <input class="form-check-input" type="checkbox" id="dynamicFilter" checked>
                                     <label class="form-check-label" for="dynamicFilter">Dynamic Filtering</label>
+                                    <button type="button" class="btn btn-secondary small" data-toggle="tooltip"
+                                    data-placement="top"
+                                    title="Dynamically filters the audio signal to emphasis higher frequences, such as those in the human vocal range, in varied and stimulating ways, persistently surprising your brain. The filter will modulate between the min and max values below. If unsure, stick with the defaults.">
+                                    ?
+                                </button>
                                 </div>
                                 <!-- Filter Frequency Range -->
                                 <div class="filter-frequency-section sub-option rounded">
@@ -163,6 +178,11 @@
                                 <div class="form-check mt-3">
                                     <input class="form-check-input" type="checkbox" id="dynamicGating" checked>
                                     <label class="form-check-label" for="dynamicGating">Dynamic Volume Gating</label>
+                                    <button type="button" class="btn btn-secondary small" data-toggle="tooltip"
+                                    data-placement="top"
+                                    title="Dynamically changes the volume of the music in ways that continuously grab the attention of your brain, and stimulate the auditory system. You can control how frequenctly this happens with te min and max vals below (in seconds). Stick with defaults if unsure.">
+                                    ?
+                                </button>
                                 </div>
                                 <!-- Gating Frequency Range -->
                                 <div class="gating-frequency-section sub-option rounded" >
@@ -183,8 +203,8 @@
 
                                 <div class="form-check mt-3">
                                     <input class="form-check-input" type="checkbox" id="dynamicBinauralBeat" checked>
-                                    <label class="form-check-label" for="dynamicBinauralBeat">Dynamic Binaural Beat
-                                        Layering</label>
+                                    <label class="form-check-label" for="dynamicBinauralBeat"> Binaural Beat
+                                        Overtones</label>
                                     <button type="button" class="btn btn-secondary small" data-toggle="tooltip"
                                         data-placement="top"
                                         title="Layers binaural beats on top of the music, which promotes calm, regulated brain states. Headphones are required to experience this effect.">
