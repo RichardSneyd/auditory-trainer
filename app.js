@@ -160,7 +160,6 @@
 
     const setCurrentVolume = () => {
         currentVolume = getRandomBetween(0, settings.volume);
-        // Apply immediate changes to the audio nodes
         gainNode.gain.linearRampToValueAtTime(currentVolume, audioContext.currentTime + ramp);
     }
 
@@ -349,7 +348,6 @@
     });
 
     audioPlayer.addEventListener('pause', function () {
-        // if (audioPlayer.disabled) return;
         stopBinauralBeats();
     });
 
