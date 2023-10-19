@@ -101,7 +101,7 @@ body::before {
 }
 
 .margin-top {
-  margin-top: 0.5em;
+  margin-top: 1em;
 }
 
 .negative-margin-bottom {
@@ -146,4 +146,22 @@ button.plain {
 
 button.plain:hover{
  color:#0180ff;
+}
+
+button.small {
+  margin-left:0.7em;
+  margin-right:0.7em;
+  padding-left:0.7em;
+  padding-right:0.7em;
+  padding-top:0.09em;
+  padding-bottom:0.09em;
+}
+
+.sub-option {
+  background-color: #ececec;
+  margin-top:0.3em;
+  padding-left:0.4em;
+  padding-right:0.4em;
+  padding-bottom:0.4em;
+  padding-top:0.4em;
 }

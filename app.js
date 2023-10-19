@@ -85,8 +85,8 @@
 
         // Connect the nodes
         sourceNode.connect(filterNode);
-        filterNode.connect(pannerNode);  // Connect the filter to the panner
-        pannerNode.connect(gainNode);  // Connect the panner to the gain
+        filterNode.connect(pannerNode); 
+        pannerNode.connect(gainNode);  
         gainNode.connect(audioContext.destination);
     };
 
@@ -104,9 +104,6 @@
         settings.dynamicGating = dynamicGating.checked;
         settings.dynamicPlaybackRate = dynamicPlaybackRate.checked;
         settings.dynamicBinauralBeat = dyanmicBinauralBeat.checked;
-        //  dynamicBinauralBeatLogic();
-
-
 
         // If dynamic settings are not checked, apply the max value immediately
         if (!settings.dynamicFilter) {
