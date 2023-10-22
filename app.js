@@ -220,11 +220,6 @@
         clearTimeout(gatingTimeout);
         const newTime = getRandomBetween(settings.gatingMin, settings.gatingMax);
         setCurrentVolume();
-        if (settings.dynamicGating) gainNode.gain.linearRampToValueAtTime(currentVolume, audioContext.currentTime + ramp);
-        setTimeout(() => {
-            gainNode.gain.linearRampToValueAtTime(settings.volume, audioContext.currentTime + ramp);
-        }, newTime * 1000);
-
     };
 
     const dynamicPanningLogic = () => {
