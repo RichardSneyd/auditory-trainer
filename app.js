@@ -85,8 +85,8 @@
 
         // Connect the nodes
         sourceNode.connect(filterNode);
-        filterNode.connect(pannerNode); 
-        pannerNode.connect(gainNode);  
+        filterNode.connect(pannerNode);
+        pannerNode.connect(gainNode);
         gainNode.connect(audioContext.destination);
     };
 
@@ -107,10 +107,7 @@
 
         dynamicGatingLogic();
 
-        // If dynamic settings are not checked, apply the max value immediately
-        if (!settings.dynamicFilter) {
-            filterNode.frequency.linearRampToValueAtTime(settings.filterMax, audioContext.currentTime + ramp);
-        }
+        setFilterFreq();
 
         if (!settings.dynamicGating) {
             gainNode.gain.linearRampToValueAtTime(settings.volume, audioContext.currentTime + ramp);
@@ -187,12 +184,24 @@
         oscillatorNodeRight.frequency.linearRampToValueAtTime(lowLeft ? high : low, audioContext.currentTime + ramp * rampFactor);
     }
 
+    const setFilterFreq = (newFrequency) => {
+        // If dynamic settings are not checked, apply the max value immediately
+        if (!settings.dynamicFilter) {
+            filterNode.type = "lowpass";
+            filterNode.frequency.linearRampToValueAtTime(settings.filterMax, audioContext.currentTime + ramp);
+            return;
+        }
+
+        filterNode.type = getRandomBetween(0, 1) > 0.8 ? 'highpass' : 'lowpass';
+        filterNode.frequency.linearRampToValueAtTime(newFrequency || settings.filterMax, audioContext.currentTime + ramp);
+    }
+
     // Dynamic Filter Logic
     const dynamicFilterLogic = () => {
         if (settings.dynamicFilter) {
             clearTimeout(filterTimeout);
             const newFrequency = getRandomBetween(settings.filterMin, settings.filterMax);
-            filterNode.frequency.linearRampToValueAtTime(newFrequency, audioContext.currentTime + ramp);
+            setFilterFreq(newFrequency)
 
             setBinauralBeatFreq(newFrequency);
 
@@ -202,6 +211,9 @@
             filterTimeout = setTimeout(dynamicFilterLogic, newTime);
         }
     };
+
+   
+
 
     // Dynamic Gating Logic
     const dynamicGatingLogic = () => {
@@ -328,7 +340,6 @@
     gatingFrequencyMax.addEventListener('input', updateSettings);
     volumeControl.addEventListener('input', () => {
         updateSettings();
-        setCurrentVolume();
         setBeatGain();
     });
     dynamicFilter.addEventListener('change', updateSettings);
