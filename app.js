@@ -105,6 +105,8 @@
         settings.dynamicPlaybackRate = dynamicPlaybackRate.checked;
         settings.dynamicBinauralBeat = dyanmicBinauralBeat.checked;
 
+        dynamicGatingLogic();
+
         // If dynamic settings are not checked, apply the max value immediately
         if (!settings.dynamicFilter) {
             filterNode.frequency.linearRampToValueAtTime(settings.filterMax, audioContext.currentTime + ramp);
@@ -159,7 +161,8 @@
     }
 
     const setCurrentVolume = () => {
-        currentVolume = getRandomBetween(0, settings.volume);
+        currentVolume = settings.dynamicGating ? getRandomBetween(0, settings.volume) : settings.volume;
+        console.log(`new vol: ${currentVolume}`)
         gainNode.gain.linearRampToValueAtTime(currentVolume, audioContext.currentTime + ramp);
     }
 
@@ -209,9 +212,6 @@
         if (settings.dynamicGating) gainNode.gain.linearRampToValueAtTime(currentVolume, audioContext.currentTime + ramp);
         setTimeout(() => {
             gainNode.gain.linearRampToValueAtTime(settings.volume, audioContext.currentTime + ramp);
-
-            // Schedule the next gating logic at the end of this one
-            gatingTimeout = setTimeout(dynamicGatingLogic, newTime * getRandomBetween(700, 11000));
         }, newTime * 1000);
 
     };
