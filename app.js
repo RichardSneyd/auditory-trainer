@@ -159,7 +159,6 @@
 
     const setCurrentVolume = () => {
         currentVolume = settings.dynamicGating ? getRandomBetween(0, settings.volume) : settings.volume;
-        console.log(`new vol: ${currentVolume}`)
         gainNode.gain.linearRampToValueAtTime(currentVolume, audioContext.currentTime + ramp);
     }
 
