@@ -187,8 +187,8 @@
     const setFilterFreq = (newFrequency) => {
         // If dynamic settings are not checked, apply the max value immediately
         if (!settings.dynamicFilter) {
-            filterNode.type = "lowpass";
-            filterNode.frequency.linearRampToValueAtTime(settings.filterMax, audioContext.currentTime + ramp);
+            filterNode.type = "highpass";
+            filterNode.frequency.linearRampToValueAtTime(settings.filterMin, audioContext.currentTime + ramp);
             return;
         }
 
