@@ -23,7 +23,7 @@
     let beatsPlaying = false;
     let currentVolume = 1;
     let ramp = .15;
-    let panningRamp = .55;
+    let panningRamp = .45;
     let sampleTracks = [];
 
     // JavaScript Audio Context
@@ -231,7 +231,7 @@
     const dynamicPanningLogic = () => {
         const panValue = getRandomBetween(-1, 1); // -1 (full left) to 1 (full right)
         pannerNode.pan.linearRampToValueAtTime(panValue, audioContext.currentTime + panningRamp);
-        setTimeout(dynamicPanningLogic, getRandomBetween(600, 11000));
+        setTimeout(dynamicPanningLogic, getRandomBetween(600, 7000));
     };
 
     const dynamicPlaybackLogic = () => {
