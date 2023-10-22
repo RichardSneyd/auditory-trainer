@@ -35,14 +35,14 @@
       "audio": "/music/mozart-string-quartet-21-prussian.mp3"
     },
     {
-      "name": "Don Giovanni",
-      "artist_name": "Mozart",
-      "audio": "/music/mozart-don-giovanni.mp3"
-    },
-    {
       "name": "Overture to the Marriage of Figaro",
       "artist_name": "Mozart",
       "audio": "/music/mozart-overture-to-the-marriage-of-figaro-k.mp3"
+    },
+    {
+      "name": "La Traviata, Brindisi (Verdi)",
+      "artist_name": "Verdi",
+      "audio": "/music/la-traviata-brindisi-verdi.mp3"
     }
    
   ]

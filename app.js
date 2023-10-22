@@ -164,7 +164,7 @@
     }
 
     const setBeatGain = () => {
-        const gain = getRandomBetween(0, 0.019 * currentVolume);
+        const gain = getRandomBetween(0, 0.012 * currentVolume);
         gainNodeLeft.gain.value = gain;
         gainNodeRight.gain.value = gain;
     }
@@ -192,7 +192,7 @@
             return;
         }
 
-        filterNode.type = getRandomBetween(0, 1) > 0.8 ? 'highpass' : 'lowpass';
+        filterNode.type = getRandomBetween(0, 1) > 0.4 ? 'highpass' : 'lowpass';
         filterNode.frequency.linearRampToValueAtTime(newFrequency || settings.filterMax, audioContext.currentTime + ramp);
     }
 
