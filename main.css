@@ -125,11 +125,25 @@ body::before {
 }
 
 .faded {
-  opacity: 0.75;
+  opacity: 0.8;
 }
 
-.faded:hover {
+.slightly-faded {
+  opacity: 0.93;
+}
+
+
+.faded:hover, .faded:hover {
   opacity: 1;
+}
+
+img {
+  transition: filter .3s ease;
+}
+
+img.drop-shadow:hover {
+ /* filter: invert(1); */
+ filter:drop-shadow(0 0 5px black);
 }
 
 button.plain {
