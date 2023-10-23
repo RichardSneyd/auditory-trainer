@@ -158,12 +158,14 @@
     }
 
     const setCurrentVolume = () => {
+        if(!gainNode) return;
         currentVolume = settings.dynamicGating ? getRandomBetween(0, settings.volume) : settings.volume;
         gainNode.gain.linearRampToValueAtTime(currentVolume, audioContext.currentTime + ramp);
         setBeatGain();
     }
 
     const setBeatGain = () => {
+        if(!gainNodeLeft || !gainNodeRight) return;
         const gain = getRandomBetween(0.004, 0.012)  * currentVolume;
         gainNodeLeft.gain.value = gain;
         gainNodeRight.gain.value = gain;
