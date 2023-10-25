@@ -159,7 +159,7 @@
 
     const setCurrentVolume = () => {
         if(!gainNode) return;
-        currentVolume = settings.dynamicGating ? getRandomBetween(0, settings.volume) : settings.volume;
+        currentVolume = settings.dynamicGating ? getRandomBetween(0.1, settings.volume) : settings.volume;
         gainNode.gain.linearRampToValueAtTime(currentVolume, audioContext.currentTime + ramp);
         setBeatGain();
     }
@@ -194,7 +194,9 @@
             return;
         }
 
-        filterNode.type = getRandomBetween(0, 1) > 0.4 ? 'highpass' : 'lowpass';
+       // filterNode.type = getRandomBetween(0, 1) > 0.4 ? 'highpass' : 'lowpass';
+        filterNode.type = 'bandpass';
+        filterNode.Q.value =  getRandomBetween(0, 1);
         filterNode.frequency.linearRampToValueAtTime(newFrequency || settings.filterMax, audioContext.currentTime + ramp);
     }
 
