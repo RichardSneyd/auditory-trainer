@@ -398,7 +398,7 @@
     window.addEventListener('DOMContentLoaded', () => {
         fetchSampleTracks();
         setTimeout(() => {
-            const link = document.getElementById("welcomeToNeuroTune");
+            const link = document.getElementById("welcomeModalLaunch");
             link.click();
             window.addEventListener('click', firstInteractionListener);
         }, 200);

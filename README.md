@@ -1,13 +1,13 @@
 
-![NeuroTune Logo](/icons/icon-512x512.png)
-# NeuroTune<sup>tm</sup> - A Free Auditory Processing Trainer
+![HearSync Logo](/icons/icon-512x512.png)
+# HearSync<sup>tm</sup> - A Free Auditory Processing Trainer
 
 
-## What is NeuroTune<sup>tm</sup>?
+## What is HearSync<sup>tm</sup>?
 
- NeuroTune is a free auditory integration and brainwave entrainment tool! [Try it out here](https://neurotune.brainy-bots.com/). Just select your prefered audio file - we recommend calming, stimulating classical music, but it's your choice! NeuroTune<sup>tm</sup> trains your auditory system by dynamically modulating the audio playback in ways that stimulate interhemispheric communication, and 'surprise' the auditory system, since these shifts are dynamic and unpredictable. Frequencies in the human vocal range are emphasised, while 'noisy' ones are reduced, thus training the brain to focus on spoken sounds, and filter out background noise. Over time, the idea is that this trains the auditory system to tune in to what it hears, discriminating between different sounds much more easily. Headphones required for optimal experience.
+ HearSync is a free auditory integration and brainwave entrainment tool! [Try it out here](https://HearSync.brainy-bots.com/). Just select your prefered audio file - we recommend calming, stimulating classical music, but it's your choice! HearSync<sup>tm</sup> trains your auditory system by dynamically modulating the audio playback in ways that stimulate interhemispheric communication, and 'surprise' the auditory system, since these shifts are dynamic and unpredictable. Frequencies in the human vocal range are emphasised, while 'noisy' ones are reduced, thus training the brain to focus on spoken sounds, and filter out background noise. Over time, the idea is that this trains the auditory system to tune in to what it hears, discriminating between different sounds much more easily. Headphones required for optimal experience.
 
- Additionally, dynamic binaural beat layering is used to increase brainwave interhemispheric synchronization and to entrain brainwaves in the delta - beta range (0.4-30Hz). Over time this tends to promote brain states conducive to calmness and self-regulation. Sustained use of NeuroTunetm can enhance auditory attention and focus, improving discriminiation and processing, and the ability to filter out noise from signal. As a result, listening becomes more effortless and fluid.
+ Additionally, dynamic binaural beat layering is used to increase brainwave interhemispheric synchronization and to entrain brainwaves in the delta - beta range (0.4-30Hz). Over time this tends to promote brain states conducive to calmness and self-regulation. Sustained use of HearSynctm can enhance auditory attention and focus, improving discriminiation and processing, and the ability to filter out noise from signal. As a result, listening becomes more effortless and fluid.
 
 ### Features
 
@@ -24,5 +24,5 @@
 
 ### Purpose and Benefit
 
-Whether you're looking to improve your language comprehension skills, refine your musical ear, or undergo auditory therapy, NeuroTune provides a versatile and customizable environment to help you reach your goals.
+Whether you're looking to improve your language comprehension skills, refine your musical ear, or undergo auditory therapy, HearSync provides a versatile and customizable environment to help you reach your goals.
 
