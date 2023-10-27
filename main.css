@@ -1,15 +1,4 @@
-@media (max-width: 768px) {
-  .container,
-  .col-md-6 {
-    margin-left: 0;
-    margin-right: 0;
-    padding-left: 15px;
-    padding-right: 15px;
-  }
-  .inline-mobile {
-    display: inline-block;
-  }
-}
+
 
 .inline-icon {
   height: 1.3em;
