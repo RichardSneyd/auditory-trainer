@@ -167,3 +167,10 @@ button.small {
   padding-bottom:0.4em;
   padding-top:0.4em;
 }
+
+@media (min-width: 992px) {
+  #bmc-wbtn {
+      display: none;
+      visibility: hidden;
+  }
+}
