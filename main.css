@@ -174,3 +174,7 @@ button.small {
       visibility: hidden;
   }
 }
+
+.bg-primary {
+  background-color: #0074cc !important;
+}
