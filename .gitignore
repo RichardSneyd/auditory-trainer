@@ -2,3 +2,6 @@
 icons/old/
 concepts
 promo/
+**/*.zip
+**/.DS_Store
+.DS_Store

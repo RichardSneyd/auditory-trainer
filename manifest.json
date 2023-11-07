@@ -1,7 +1,9 @@
 {
+    "manifest_version": 3,
     "short_name": "ListenUp",
-    "name": "A Free Auditory Integration & Brainwave Entrainment Tool",
+    "name": "ListenUp: Free Listening Therapy",
     "description": "A free auditory integration & brainwave entrainment tool!",
+    "version": "1",
     "icons": [
       {
         "src": "icons/icon-96x96.png",
