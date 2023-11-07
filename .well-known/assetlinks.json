@@ -1,0 +1,8 @@
+[{
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.brainy_bots.listenup.twa",
+      "sha256_cert_fingerprints": ["37:C3:45:1E:F7:A6:01:CA:59:6A:B8:5D:D5:29:CE:DC:68:BA:B3:58:B4:19:15:31:F0:55:BD:C9:50:33:05:D8"]
+    }
+  }]
