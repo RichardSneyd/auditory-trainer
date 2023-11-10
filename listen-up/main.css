@@ -1,0 +1,180 @@
+
+
+.inline-icon {
+  height: 1.3em;
+  width: auto;
+  vertical-align: middle;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+
+.inline-icon-2 {
+  height: 3em;
+  width: auto;
+  vertical-align: middle;
+  margin-right: 0.5em;
+}
+
+.translucent {
+  opacity: 0.8;
+}
+
+body::before {
+  content: "";
+  position: fixed; 
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+
+  background-image: url("./icons/icon-512x512.png");
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  opacity: 0.06;
+}
+
+.modal-button {
+  font-size: 20px;
+  padding: 15px 30px;
+  margin: 10px;
+  border: 3px solid black;
+}
+
+.modal-button:hover {
+  background-color: #000; 
+  color: white;
+}
+
+.modal-button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+
+.centered {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.margin-left {
+  margin-left: 1em;
+}
+
+#sampleTrackList {
+  list-style-type: none;
+  padding: 1em;
+  text-align: center;
+}
+#sampleTrackList li {
+  padding: 10px;
+  cursor: pointer;
+}
+#sampleTrackList li:hover {
+  background-color: #5379f5;
+  color: white;
+  border-radius: 1em;
+}
+
+.padding-low {
+  padding: 0.2em;
+}
+
+.margin-bottom {
+  margin-bottom: 1.5em;
+}
+
+.margin-top {
+  margin-top: 1em;
+}
+
+.negative-margin-bottom {
+  margin-bottom: -0.2em;
+}
+
+.negative-margin-left {
+  margin-left: -0.4em;
+}
+
+.subtle-link {
+  color: black;
+}
+
+.subtle-link:hover {
+  text-decoration: none;
+  background:none;
+}
+
+.fas.fa-cog {
+  margin-right: .4em; 
+}
+
+.faded {
+  opacity: 0.95;
+}
+
+.slightly-faded {
+  opacity: 0.93;
+}
+
+
+.faded:hover, .faded:hover {
+  opacity: 1;
+}
+
+img {
+  transition: filter .3s ease;
+}
+
+img.drop-shadow:hover {
+ /* filter: invert(1); */
+ filter:drop-shadow(0 0 5px black);
+}
+
+button.plain {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  cursor: pointer;
+}
+
+button.plain:hover{
+ color:#0180ff;
+}
+
+button.small {
+  margin-left:0.7em;
+  margin-right:0.7em;
+  padding-left:0.7em;
+  padding-right:0.7em;
+  padding-top:0.09em;
+  padding-bottom:0.09em;
+}
+
+.sub-option {
+  background-color: #f4f4f4;
+  margin-top:0.3em;
+  padding-left:0.4em;
+  padding-right:0.4em;
+  padding-bottom:0.4em;
+  padding-top:0.4em;
+}
+
+@media (min-width: 992px) {
+  #bmc-wbtn {
+      display: none;
+      visibility: hidden;
+  }
+}
+
+.bg-primary {
+  background-color: #0074cc !important;
+}
